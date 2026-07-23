@@ -158,15 +158,16 @@ For deeper analysis, you can curate a collection of key public papers and index 
 
 ### Step 1: Curate Public Papers
 
-Create a folder with downloaded PDFs of key publications:
+Sample public literature files are provided in `sample-data/public-literature/`:
 
 ```
 C:\MicrosoftDiscoveryLab\sample-data\public-literature\
-├── review-disease-X-targets-2024.pdf
-├── rna-seq-meta-analysis-disease-X.pdf
-├── immunology-pathway-review.pdf
-├── gene-XYZ-functional-study.pdf
-└── clinical-evidence-target-candidates.pdf
+├── review-ra-therapeutic-targets-2024.md         ← Review: RA target landscape
+├── tyk2-therapeutic-target-evidence.md           ← TYK2 evidence (genetics + clinical)
+├── btk-inhibitors-autoimmune-clinical-review.md  ← BTK clinical outcomes review
+├── rna-seq-meta-analysis-ra-synovium.md          ← Public RNA-seq meta-analysis (8 datasets)
+├── clinical-trials-ra-targets-summary.md         ← ClinicalTrials.gov compilation
+└── immunology-pathways-ra-review.md              ← Immunology pathways & cell types
 ```
 
 ### Step 2: Create and Ingest

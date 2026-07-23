@@ -15,22 +15,20 @@
 
 ## 3.2 Prepare Your Internal Data
 
-For this lab, gather the following types of documents into a single folder. If you don't have real data, create placeholder files:
+For this lab, sample data files are provided in the `sample-data/internal/` folder. These are synthetic research documents that simulate realistic pharmaceutical R&D outputs for Rheumatoid Arthritis target identification:
 
 ```
 C:\MicrosoftDiscoveryLab\sample-data\internal\
-├── rna-seq-results-study-001.pdf          ← RNA sequencing differential expression results
-├── rna-seq-results-study-002.pdf          ← Follow-up RNA-seq experiment
-├── gene-expression-profile-disease-X.pdf  ← Gene expression profiling for your disease
-├── internal-review-target-candidates.docx ← Internal review of candidate gene targets
-├── screening-results-compound-library.pdf ← High-throughput screening results
-├── immunology-pathway-analysis.pdf        ← Immunology pathway analysis report
-└── prior-target-assessment-report.docx    ← Previous target assessment documentation
+├── rna-seq-results-study-001.md           ← RNA-seq differential expression (established RA vs. controls)
+├── rna-seq-results-study-002.md           ← Follow-up RNA-seq (early vs. late RA + blood PBMCs)
+├── gene-expression-profile-disease-X.md   ← Cross-tissue expression profiling + network analysis
+├── internal-review-target-candidates.md   ← Internal target review committee document
+├── screening-results-compound-library.md  ← High-throughput kinase inhibitor screening results
+├── immunology-pathway-analysis.md         ← Internal immunology experiments & pathway mapping
+└── prior-target-assessment-report.md      ← Previous manual target assessment (for comparison)
 ```
 
-> **Tip**: In a real scenario, these would be your organization's proprietary research papers, lab reports, and experimental data summaries. Even 5-10 documents are enough to see the value.
-
-**Supported file formats**: `.pdf`, `.docx`, `.pptx`, `.xlsx`, `.txt`, `.html`, `.md`
+> **Note**: In a real scenario, these would be your organization's proprietary research papers (PDFs, DOCX), lab reports, and experimental data summaries. The sample files use Markdown format for portability, but the Bookshelf supports `.pdf`, `.docx`, `.pptx`, `.xlsx`, `.txt`, `.html`, and `.md`.
 
 ---
 
