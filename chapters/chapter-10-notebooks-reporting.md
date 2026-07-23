@@ -1,10 +1,10 @@
-# Chapter 9: Capturing Findings — Notebooks & Reporting
+# Chapter 10: Capturing Findings — Notebooks & Reporting
 
 > **Goal**: Document your target identification and validation workflow in Discovery Notebooks. Create a publishable target assessment report that captures all evidence, rankings, and recommendations with full traceability.
 
 ---
 
-## 9.1 What You Will Learn
+## 10.1 What You Will Learn
 
 - How to create and use the three Notebook formats (Jupyter, Wiki, Brief)
 - How to capture findings from Bookshelf queries and engine outputs
@@ -14,7 +14,7 @@
 
 ---
 
-## 9.2 Choosing the Right Notebook Format
+## 10.2 Choosing the Right Notebook Format
 
 | Format | Best For | Structure |
 |--------|----------|-----------|
@@ -29,7 +29,7 @@ For this lab, we'll create all three:
 
 ---
 
-## 9.3 Create the Target Assessment Wiki
+## 10.3 Create the Target Assessment Wiki
 
 ### Step 1: Create the Wiki Notebook
 
@@ -112,7 +112,7 @@ Save the following as a methods document in my Target Assessment wiki:
 
 ---
 
-## 9.4 Create the Executive Brief
+## 10.4 Create the Executive Brief
 
 The Brief format auto-updates as work progresses — ideal for leadership summaries.
 
@@ -160,7 +160,7 @@ with citations. Full methodology in the Target Assessment Wiki.
 
 ---
 
-## 9.5 Create the Analysis Jupyter Notebook
+## 10.5 Create the Analysis Jupyter Notebook
 
 For computational analysis logging:
 
@@ -180,7 +180,7 @@ In the Jupyter notebook, create cells for each analysis step. Use the typed cell
 
 ---
 
-## 9.6 Pin Results from Bookshelf Searches
+## 10.6 Pin Results from Bookshelf Searches
 
 As you work through the analysis, you can pin Bookshelf search results directly to your notebooks:
 
@@ -195,7 +195,7 @@ This creates a traceable chain: **Source Document → Bookshelf Search → Noteb
 
 ---
 
-## 9.7 Publish Your Findings
+## 10.7 Publish Your Findings
 
 Notebooks can be rendered to shareable formats:
 
@@ -211,7 +211,7 @@ Supported output formats:
 
 ---
 
-## 9.8 Version Control Your Work
+## 10.8 Version Control Your Work
 
 Everything in `.discovery/` is plain files on disk. Version-control the entire workflow:
 
@@ -231,7 +231,7 @@ This captures:
 
 ---
 
-## 9.9 The Complete Documentation Stack
+## 10.9 The Complete Documentation Stack
 
 After this chapter, you have:
 
@@ -250,9 +250,9 @@ After this chapter, you have:
 
 ---
 
-## 9.10 Checkpoint
+## 10.10 Checkpoint
 
-Before proceeding to Chapter 10, confirm:
+Before proceeding to Chapter 11, confirm:
 
 - [ ] A Wiki notebook documents all findings, decisions, and methods
 - [ ] An Executive Brief summarizes recommendations for leadership
@@ -263,5 +263,5 @@ Before proceeding to Chapter 10, confirm:
 
 ---
 
-**Previous**: [← Chapter 8 — HPC & Analysis](chapter-08-hpc-and-analysis.md)
-**Next**: [Chapter 10 — Recap & Next Steps →](chapter-10-recap-next-steps.md)
+**Previous**: [← Chapter 9 — HPC & Analysis](chapter-09-hpc-and-analysis.md)
+**Next**: [Chapter 11 — Recap & Next Steps →](chapter-11-recap-next-steps.md)

@@ -272,4 +272,4 @@ Before proceeding to Chapter 8, confirm:
 ---
 
 **Previous**: [← Chapter 6 — Target Prioritization](chapter-06-target-prioritization.md)
-**Next**: [Chapter 8 — HPC & High-Dimensional Analysis →](chapter-08-hpc-and-analysis.md)
+**Next**: [Chapter 8 — Enterprise Infrastructure Deployment →](chapter-08-enterprise-infrastructure.md)

@@ -1,10 +1,10 @@
-# Chapter 8: High-Dimensional Data Analysis & HPC Integration
+# Chapter 9: High-Dimensional Data Analysis & HPC Integration
 
 > **Goal**: Understand how Microsoft Discovery connects to High-Performance Computing (HPC) for large-scale analyses, how to handle high-dimensional datasets (multi-omics, large RNA-seq panels), and the cost/architecture implications. This chapter bridges the local Discovery app to the enterprise cloud platform.
 
 ---
 
-## 8.1 What You Will Learn
+## 9.1 What You Will Learn
 
 - Why HPC integration is a game-changer for target assessment
 - How the enterprise Discovery platform connects to supercomputer node pools
@@ -15,7 +15,7 @@
 
 ---
 
-## 8.2 Why HPC Matters for Target Discovery
+## 9.2 Why HPC Matters for Target Discovery
 
 High-dimensional biological data is growing exponentially:
 
@@ -38,7 +38,7 @@ High-dimensional biological data is growing exponentially:
 
 ---
 
-## 8.3 Architecture: Local App vs. Enterprise Platform
+## 9.3 Architecture: Local App vs. Enterprise Platform
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -63,7 +63,7 @@ High-dimensional biological data is growing exponentially:
 
 ---
 
-## 8.4 Enterprise Infrastructure Overview
+## 9.4 Enterprise Infrastructure Overview
 
 > **Prerequisite**: This section requires an Azure subscription. If you don't have one, read through this chapter as reference material.
 
@@ -99,7 +99,7 @@ Resource Group
 
 ---
 
-## 8.5 Connecting Internal Data at Enterprise Scale
+## 9.5 Connecting Internal Data at Enterprise Scale
 
 In the enterprise platform, instead of ingesting local files, you:
 
@@ -138,7 +138,7 @@ Agents use built-in tools like `GetResourceContext` and `PreviewResource` to dis
 
 ---
 
-## 8.6 Enterprise Bookshelf: Scaling Knowledge Bases
+## 9.6 Enterprise Bookshelf: Scaling Knowledge Bases
 
 The enterprise Bookshelf supports different index sizes:
 
@@ -161,7 +161,7 @@ The enterprise Bookshelf supports different index sizes:
 
 ---
 
-## 8.7 HPC Tool Runs for Large-Scale Analysis
+## 9.7 HPC Tool Runs for Large-Scale Analysis
 
 In the enterprise platform, computational tools run on supercomputer node pools:
 
@@ -182,7 +182,7 @@ Engine orchestrates:
 
 ---
 
-## 8.8 Cost Considerations
+## 9.8 Cost Considerations
 
 | Dimension | Discovery App (Local) | Discovery Services (Cloud) |
 |-----------|----------------------|---------------------------|
@@ -203,11 +203,11 @@ Engine orchestrates:
 
 ---
 
-## 8.9 Lab Exercise: Planning Your HPC Workflow
+## 9.9 Lab Exercise: Planning Your HPC Workflow
 
 Even without an Azure subscription, you can plan the workflow:
 
-**Task 8.1** — Design the HPC analysis plan:
+**Task 9.1** — Design the HPC analysis plan:
 ```
 Using the tasks tool, create a plan for scaling our target validation 
 to enterprise Microsoft Discovery with HPC:
@@ -222,7 +222,7 @@ to enterprise Microsoft Discovery with HPC:
 5. "Cost Estimate" - Estimate monthly Azure costs for our workflow
 ```
 
-**Task 8.2** — Evaluate the HPC value:
+**Task 9.2** — Evaluate the HPC value:
 ```
 Compare what we achieved locally in Chapters 1-7 with what the 
 enterprise platform would additionally enable:
@@ -235,9 +235,9 @@ enterprise platform would additionally enable:
 
 ---
 
-## 8.10 Checkpoint
+## 9.10 Checkpoint
 
-Before proceeding to Chapter 9, confirm:
+Before proceeding to Chapter 10, confirm:
 
 - [ ] You understand the difference between the local Discovery app and enterprise Discovery services
 - [ ] You understand the storage container/asset architecture for enterprise data
@@ -248,5 +248,5 @@ Before proceeding to Chapter 9, confirm:
 
 ---
 
-**Previous**: [← Chapter 7 — Target Validation](chapter-07-target-validation.md)
-**Next**: [Chapter 9 — Notebooks & Reporting →](chapter-09-notebooks-reporting.md)
+**Previous**: [← Chapter 8 — Enterprise Infrastructure](chapter-08-enterprise-infrastructure.md)
+**Next**: [Chapter 10 — Notebooks & Reporting →](chapter-10-notebooks-reporting.md)

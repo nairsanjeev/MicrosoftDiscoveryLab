@@ -1,10 +1,10 @@
-# Chapter 10: End-to-End Recap & Next Steps
+# Chapter 11: End-to-End Recap & Next Steps
 
 > **Goal**: Review the complete target assessment workflow you've built, understand the value delivered, and plan next steps for scaling to team-wide adoption and enterprise deployment.
 
 ---
 
-## 10.1 What You Accomplished in This Lab
+## 11.1 What You Accomplished in This Lab
 
 Over the course of 9 chapters, you built a complete AI-augmented target assessment workflow:
 
@@ -22,7 +22,7 @@ Over the course of 9 chapters, you built a complete AI-augmented target assessme
 
 ---
 
-## 10.2 The Before and After
+## 11.2 The Before and After
 
 ### Before Microsoft Discovery
 
@@ -62,7 +62,7 @@ Total: 1-2 days, fully reproducible and auditable
 
 ---
 
-## 10.3 Key Takeaways
+## 11.3 Key Takeaways
 
 ### 1. Aggregation Is the Superpower
 
@@ -104,7 +104,7 @@ Start on your laptop with zero cost. Scale to enterprise Azure when needed. Your
 
 ---
 
-## 10.4 Next Steps: Extending Your Workflow
+## 11.4 Next Steps: Extending Your Workflow
 
 ### Immediate Next Steps
 
@@ -139,7 +139,7 @@ When your team is ready to scale:
 
 ---
 
-## 10.5 Available Scientific Agents and Starter Kits
+## 11.5 Available Scientific Agents and Starter Kits
 
 The Discovery GitHub repository contains a catalog of agents and starter kits:
 
@@ -155,7 +155,7 @@ dx catalog list --workspace C:\MicrosoftDiscoveryLab\workspace
 
 ---
 
-## 10.6 Cost Summary
+## 11.6 Cost Summary
 
 | Component | Local (This Lab) | Enterprise Scale |
 |-----------|------------------|-----------------|
@@ -170,7 +170,7 @@ dx catalog list --workspace C:\MicrosoftDiscoveryLab\workspace
 
 ---
 
-## 10.7 Reference Architecture
+## 11.7 Reference Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -205,7 +205,7 @@ dx catalog list --workspace C:\MicrosoftDiscoveryLab\workspace
 
 ---
 
-## 10.8 Final Checkpoint
+## 11.8 Final Checkpoint
 
 Confirm you have completed the full lab:
 
@@ -222,7 +222,7 @@ Confirm you have completed the full lab:
 
 ---
 
-## 10.9 Additional Resources
+## 11.9 Additional Resources
 
 | Resource | URL |
 |----------|-----|
@@ -243,5 +243,5 @@ Confirm you have completed the full lab:
 
 ---
 
-**Previous**: [← Chapter 9 — Notebooks & Reporting](chapter-09-notebooks-reporting.md)
+**Previous**: [← Chapter 10 — Notebooks & Reporting](chapter-10-notebooks-reporting.md)
 **Back to**: [Lab Overview →](../README.md)
