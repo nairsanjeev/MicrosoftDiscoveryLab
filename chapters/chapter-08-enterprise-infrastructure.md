@@ -374,7 +374,159 @@ across available knowledge bases and tools.
 
 ---
 
-## 8.14 Enterprise vs. Local — Side-by-Side Workflow Comparison
+## 8.14 (Optional) Deploy Everything with GitHub Copilot Agent Mode
+
+Instead of manually executing Steps 1-9 above, you can use **GitHub Copilot Agent Mode** in VS Code to deploy the entire Microsoft Discovery infrastructure in a single conversational interaction. This uses the official Bicep template from [Azure Quickstart Templates](https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.discovery/discovery-infra-deployment).
+
+### Prerequisites for Agent Mode Deployment
+
+- [ ] Azure CLI installed and authenticated (`az login`)
+- [ ] GitHub Copilot with Agent Mode enabled in VS Code
+- [ ] Azure subscription allow-listed for Microsoft Discovery
+- [ ] `Microsoft.Discovery` resource provider registered on your subscription
+- [ ] Discovery NSP Perimeter Joiner custom role created and assigned (see [Configure NSP](https://learn.microsoft.com/en-us/azure/microsoft-discovery/how-to-configure-network-security))
+- [ ] Sufficient quota reservations in your target region
+
+### Step 1: Open Copilot Agent Mode
+
+1. Open VS Code in the `C:\MicrosoftDiscoveryLab\workspace` folder.
+2. Press `Ctrl+Shift+I` to open **Copilot Chat in Agent Mode** (or click the Copilot icon → select **Agent**).
+3. Agent Mode gives Copilot the ability to run terminal commands, create files, and iterate on errors autonomously.
+
+### Step 2: Prompt Copilot to Deploy the Infrastructure
+
+Paste the following prompt into the Agent Mode chat:
+
+```
+Deploy a complete Microsoft Discovery infrastructure on Azure using Bicep. 
+Use the official quickstart template from:
+https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.discovery/discovery-infra-deployment
+
+Configuration:
+- Region: eastus
+- Supercomputer name: sc-ra-targetlab
+- Workspace name: ws-ra-targetlab
+- Node pool VM SKU: Standard_D4s_v6 (scale 0-3 nodes)
+- Chat model: gpt-5.2 (deployment name: gpt-5-2)
+- Storage container: stc-ra-targetlab
+- Project name: prj-ra-targetlab
+- Enable GitHub Copilot AI features: true
+- Enable VS Code extensions: true
+- Network isolation: false (public access for lab)
+
+Steps:
+1. Create a resource group named "rg-discovery-lab-eastus" in eastus
+2. Download/create the Bicep template (main.bicep) with all resources:
+   VNet (10.0.0.0/16 with 6 subnets), UAMI with role assignments, 
+   storage account with CORS, supercomputer with node pool, workspace, 
+   chat model deployment, storage container, and project
+3. Deploy using: az deployment group create
+4. Validate the deployment succeeded
+5. List all created resources
+
+Run the commands in the terminal. Fix any errors that occur.
+```
+
+### Step 3: Watch Copilot Execute
+
+In Agent Mode, Copilot will:
+
+1. **Create the Bicep file** — writes `main.bicep` with all resource definitions (VNet, UAMI, storage, supercomputer, workspace, project)
+2. **Create the resource group** — runs `az group create --name rg-discovery-lab-eastus --location eastus`
+3. **Deploy the template** — runs:
+   ```
+   az deployment group create \
+     --resource-group rg-discovery-lab-eastus \
+     --template-file main.bicep \
+     --parameters location=eastus \
+       supercomputerName=sc-ra-targetlab \
+       workspaceName=ws-ra-targetlab \
+       nodePoolVmSize=Standard_D4s_v6 \
+       chatModelDeploymentName=gpt-5-2 \
+       chatModelName=gpt-5.2 \
+       storageContainerName=stc-ra-targetlab \
+       projectName=prj-ra-targetlab
+   ```
+4. **Handle errors** — if deployment fails (quota, naming conflict, missing provider), Copilot reads the error message and proposes a fix
+5. **Validate** — lists resources to confirm everything was created
+
+### What the Bicep Template Creates
+
+The official template deploys all resources in a single atomic operation:
+
+| Resource | Type | Purpose |
+|----------|------|---------|
+| Virtual Network | `Microsoft.Network/virtualNetworks` | 6 subnets (nodepool, AKS, workspace, private endpoint, agent, search) with appropriate delegations |
+| Managed Identity | `Microsoft.ManagedIdentity/userAssignedIdentities` | UAMI for supercomputer + workspace authentication |
+| Role Assignments | `Microsoft.Authorization/roleAssignments` | Storage Blob Data Contributor, Discovery Platform Contributor, AcrPull |
+| Storage Account | `Microsoft.Storage/storageAccounts` | Standard_LRS with CORS for Discovery Studio + VS Code |
+| Blob Container | `Microsoft.Storage/.../containers` | `discoveryoutputs` container for data |
+| Supercomputer | `Microsoft.Discovery/supercomputers` | Compute backbone with cluster/kubelet/workload identities |
+| Node Pool | `Microsoft.Discovery/supercomputers/nodePools` | Scalable VM pool (0-3 nodes) for tool execution and indexing |
+| Workspace | `Microsoft.Discovery/workspaces` | Collaborative environment linked to supercomputer |
+| Chat Model | `Microsoft.Discovery/workspaces/chatModelDeployments` | LLM deployment for agents and Discovery Engine |
+| Storage Container | `Microsoft.Discovery/storageContainers` | Discovery-managed storage linked to blob account |
+| Project | `Microsoft.Discovery/workspaces/projects` | Research project with agent and session support |
+
+### Step 4: Post-Deployment Setup
+
+After Copilot completes the deployment, you still need to:
+
+1. **Assign persona roles to yourself** — run this in the terminal (or ask Copilot to do it):
+   ```powershell
+   # Assign Platform Administrator persona roles
+   # Use the Set-DiscoveryRoleAssignments.ps1 script:
+   Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azure/microsoft-discovery/main/scripts/Set-DiscoveryRoleAssignments.ps1" -OutFile Set-DiscoveryRoleAssignments.ps1
+   ./Set-DiscoveryRoleAssignments.ps1 -SubscriptionId <your-sub-id> -ResourceGroupName rg-discovery-lab-eastus -UserObjectId <your-entra-object-id> -Persona PlatformAdministrator
+   ```
+
+2. **Assign Foundry User role on the managed resource group** — find the managed RG name on the workspace overview page, then assign `Foundry User` to your account.
+
+3. **Sign in to Discovery Studio** — navigate to https://studio.discovery.microsoft.com and verify your workspace, project, and agent are visible.
+
+### Troubleshooting with Agent Mode
+
+If deployment fails, Copilot Agent Mode excels at diagnosing and fixing issues. Common scenarios:
+
+| Error | Copilot's Fix |
+|-------|--------------|
+| `QuotaExceeded` for VM SKU | Switches to a different SKU or region |
+| `ResourceProviderNotRegistered` | Runs `az provider register --namespace Microsoft.Discovery` |
+| `SubnetDelegationConflict` | Adjusts subnet configuration |
+| `NameNotAvailable` (storage account) | Generates a new globally unique name |
+| `RoleAssignmentAlreadyExists` | Skips the duplicate and continues |
+
+Simply tell Copilot: "The deployment failed. Fix the error and retry."
+
+### Why Use Agent Mode?
+
+| Aspect | Manual (Steps 5-13) | Agent Mode |
+|--------|---------------------|------------|
+| **Time** | 30-60 minutes clicking through Azure portal | ~10 minutes (mostly waiting for provisioning) |
+| **Errors** | Must interpret and fix manually | Copilot reads errors and auto-fixes |
+| **Repeatability** | Must remember all steps | Bicep file is reusable IaC |
+| **Learning** | Good for understanding each resource | Good for getting started fast |
+| **Customization** | Flexible per-resource control | Modify the prompt or Bicep params |
+
+> **Recommendation**: Use the manual portal walkthrough (Steps 5-13) the first time to understand each resource. Use Agent Mode for subsequent deployments or when spinning up new environments quickly.
+
+### Clean Up Resources (When Done with Lab)
+
+To delete all resources created by this deployment:
+
+```
+Ask Copilot Agent Mode:
+"Delete the resource group rg-discovery-lab-eastus and all its contents."
+```
+
+Or run manually:
+```powershell
+az group delete --name rg-discovery-lab-eastus --yes --no-wait
+```
+
+---
+
+## 8.15 Enterprise vs. Local — Side-by-Side Workflow Comparison
 
 | Workflow Step | Discovery App (Local) | Discovery Services (Enterprise) |
 |-------------|----------------------|----------------------------------|
@@ -390,7 +542,7 @@ across available knowledge bases and tools.
 
 ---
 
-## 8.15 Checkpoint
+## 8.16 Checkpoint
 
 Before proceeding to Chapter 9, confirm:
 
