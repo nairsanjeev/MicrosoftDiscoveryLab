@@ -1,372 +1,407 @@
-# Chapter 11: Microsoft Discovery Enterprise — Web Sessions Interface
+# Chapter 11: Microsoft Discovery Studio — The Web Research Environment
 
-> **Goal**: Explore the Discovery Enterprise web interface — a cloud-hosted, session-based research environment for collaborative scientific investigation. Understand how it complements the VS Code extension and when to use each.
+> **Goal**: Learn to use **Microsoft Discovery Studio** — the browser-based, collaborative research environment for Microsoft Discovery. Studio is built on Visual Studio Code for the Web and provides shared sessions, agents, knowledge bases, tools, and data management without any local installation.
 
 ---
 
 ## 11.1 What You Will Learn
 
-- What the Discovery Enterprise web interface is and how it differs from the VS Code extension
-- How to create and manage research sessions
-- How Collections organize knowledge across projects
-- How to use Agents and Knowledge Bases from the web UI
-- How to leverage quick-action workflows (Research, Plan, Explore)
-- When to use the web interface vs. the VS Code extension
+- What Microsoft Discovery Studio is and how it differs from the local VS Code extension
+- How to sign in and navigate the Studio interface (Home, Workspaces, Projects, Resources)
+- How to create a project and configure agents
+- How to run shared sessions — collaborative research conversations with AI agents
+- How to manage Knowledge Bases, Tools, and Data from the web
+- When to use Studio vs. the local Discovery App
 
 ---
 
-## 11.2 Accessing the Discovery Enterprise Interface
+## 11.2 What Is Microsoft Discovery Studio?
 
-The Discovery Enterprise web interface is available to organizations with the Enterprise tier. It provides a browser-based research experience backed by the same AI capabilities as the VS Code extension, but designed for session-based collaborative workflows.
+Microsoft Discovery Studio is the **web-based, unified research environment** for Microsoft Discovery. It runs entirely in the browser at:
 
-### How to Access
+> **https://studio.discovery.microsoft.com**
 
-1. Navigate to your organization's Discovery Enterprise URL (provided by your admin after the Chapter 8 Azure deployment).
-2. Sign in with your Microsoft Entra ID credentials.
-3. You'll land on the **Discovery Home** screen.
+Key characteristics:
 
-### What You See
+| Feature | Detail |
+|---------|--------|
+| **Built on** | Visual Studio Code for the Web |
+| **Installation** | None — browser only (any modern browser) |
+| **Authentication** | Microsoft Entra ID (SSO) |
+| **Collaboration** | Shared sessions between team members on the same project |
+| **Customization** | Full VS Code theming, layout, split editors |
+| **Infrastructure** | Requires an Azure-deployed Discovery Workspace (Chapter 8) |
 
-The interface has three main areas:
-
-| Area | Location | Purpose |
-|------|----------|---------|
-| **Sidebar** | Left panel | Navigation: Home, Project Data, AI Capabilities, Jobs, Collections |
-| **Session Panel** | Center | Interactive research workspace — where you describe goals and get results |
-| **Session Artifacts** | Bottom | Outputs generated during your session (documents, figures, tables) |
+> **Key distinction**: The local Discovery App (Chapters 1-10) runs on your machine with local Bookshelves and is single-user. Discovery Studio runs in the cloud, backed by enterprise infrastructure, with shared sessions and team-wide Knowledge Bases.
 
 ---
 
-## 11.3 The Home Screen
+## 11.3 Prerequisites
 
-When you first open Discovery Enterprise, you see:
+Before using Discovery Studio, you need:
+
+1. **A deployed Discovery Workspace** — set up via Azure portal or Bicep (see Chapter 8)
+2. **A Project** created within that workspace
+3. **A persona role assignment** — either **Scientist** or **Platform Administrator**
+4. **A chat model deployment** — an LLM deployed in your workspace (e.g., Claude Opus 4.6, GPT-4)
+
+If you completed Chapter 8, you already have all of this in place.
+
+---
+
+## 11.4 Sign In to Discovery Studio
+
+1. Open your browser and navigate to **https://studio.discovery.microsoft.com**
+2. Sign in with your **Microsoft Entra ID** credentials (work or school account).
+3. If you have access to multiple Entra tenants, click your profile icon (top-right) to select the correct tenant.
+4. You land on the **Home** page.
+
+> **Tip**: You can also find the Studio URL on your Workspace's overview page in the Azure portal.
+
+---
+
+## 11.5 The Home Page
+
+After signing in, the Home page serves as your landing page:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  Microsoft Discovery                                             │
-│  What would you like to discover today?                          │
+│  Microsoft Discovery Studio                                      │
 │                                                                  │
-│  ● Enterprise    Learn more                                      │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
+│  │ Getting      │  │ Learn More   │  │ What's New   │          │
+│  │ Started      │  │              │  │              │          │
+│  └──────────────┘  └──────────────┘  └──────────────┘          │
 │                                                                  │
-│  ┌─────────────────────────────────────────────────────────────┐│
-│  │ 🔗 Add inputs and context...                                ││
-│  │ Describe what you want to achieve...                        ││
-│  │                                           ▶ [Model: Claude] ││
-│  └─────────────────────────────────────────────────────────────┘│
-│                                                                  │
-│  [Help me get started] [Research] [Explore agents] [Plan] [...]  │
-│                                                                  │
-│  ▷ RECENT                                                        │
+│  RECENT ACTIVITY                                                 │
+│  • Project: RA-Target-Assessment (last accessed 2h ago)          │
+│  • Project: PET-Decomposition (last accessed yesterday)          │
+│  • Workspace: mdqlabs-dev-uksouth (3 projects)                   │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### Key Elements
-
-- **Enterprise Badge**: Confirms you're on the enterprise tier with full capabilities.
-- **Prompt Box**: Natural-language input — describe your research goal, and Discovery orchestrates agents, knowledge bases, and tools to deliver results.
-- **Add Inputs and Context**: Attach files, datasets, or prior session outputs as context.
-- **Model Selector**: Shows the active LLM (e.g., Claude Opus 4.6). Enterprise deployments can configure model availability.
-- **Quick Actions**: Pre-built workflow starters (see Section 11.5).
-
----
-
-## 11.4 Sidebar Navigation
-
-### HOME
-
-Your landing page with the session interface and recent activity.
-
-### Project Data
-
-Access and manage data assets associated with your project:
-- Upload datasets directly
-- Browse existing project files
-- Connect to Azure storage accounts or data lakes
-
-### AI Capabilities
-
-| Component | Purpose |
-|-----------|---------|
-| **Agents** | Specialized AI agents configured for your research domain (e.g., TargetAssessmentAgent, LiteratureReviewAgent) |
-| **Knowledge Bases** | Enterprise-managed collections of indexed documents — the cloud equivalent of local Bookshelves |
-| **All** | Browse all available AI capabilities in one view |
-
-### Jobs
-
-Long-running tasks that execute asynchronously:
-- Large-scale document ingestion
-- Batch analysis across multiple targets
-- Scheduled research sweeps
-- HPC-connected analyses
-
-### Collections
-
-Collections are curated groups of knowledge bases organized by research theme:
-
-**Example Collections** (from a materials science project):
-- Computational design
-- Direct evolution
-- Polymer chemistry
-- Industrial biocatalysis
-- PET Decomposition
-
-For our Rheumatoid Arthritis lab, you might create:
-- Immunology pathways
-- JAK-STAT signaling
-- Clinical evidence
-- Target validation data
-- Internal experimental results
-
-**To create a Collection**:
-1. Click **New collection** in the COLLECTIONS section.
-2. Name it (e.g., "Rheumatoid Arthritis — TYK2 Evidence").
-3. Add Knowledge Bases to the collection.
+| Section | Purpose |
+|---------|---------|
+| **Getting Started** | Launch the project creation flow |
+| **Learn More** | Access documentation and introductory guides |
+| **What's New** | Latest platform announcements and features |
+| **Recent Activity** | Quick access to recently used projects and workspaces |
 
 ---
 
-## 11.5 Quick-Action Workflows
+## 11.6 Navigation Sidebar
 
-The Enterprise interface offers four quick-action buttons that launch pre-configured workflows:
+The sidebar is always visible on the left and provides access to all major areas:
 
-### 1. Help Me Get Started
+### Top-Level Navigation
 
-Opens a guided onboarding experience:
-- Introduces available agents and knowledge bases
-- Suggests a research workflow based on your project type
-- Recommends collections to explore
+| Item | Purpose |
+|------|---------|
+| **Home** | Return to the landing page with getting-started cards and recent activity |
+| **Workspaces** | View and manage all workspaces you have access to |
+| **Projects** | Browse, manage, and open projects across all workspaces |
 
-**Try it**:
+### Resources
+
+| Item | Purpose |
+|------|---------|
+| **Tools** | Browse computational tools available to agents |
+| **Knowledge** | Manage Bookshelves and Knowledge Bases (GraphRAG-indexed documents that provide agents with domain-specific context) |
+| **Data** | Access and manage storage containers linked to your projects for input/output data |
+
+---
+
+## 11.7 Workspaces View
+
+Select **Workspaces** from the sidebar to see all workspaces you have access to:
+
+| Column | Description |
+|--------|-------------|
+| **Name** | Workspace name (click to open) |
+| **Region** | Azure region where the workspace is deployed |
+| **Resource Group** | The Azure resource group containing workspace resources |
+| **Provisioning State** | Deployment state (Succeeded, Failed, Deleting) |
+| **Created By** | Identity that created the workspace |
+| **Created At** | Timestamp of creation |
+
+Use the **Refresh** and **Filter** controls above the table to update or narrow results.
+
+For our lab, you should see the workspace deployed in Chapter 8 (e.g., `ra-discovery-workspace` in your chosen region).
+
+---
+
+## 11.8 Opening a Project
+
+When you open a project, Discovery Studio transitions into a **full Visual Studio Code for the Web environment**. This is where you conduct research.
+
+The project view includes:
+
+| Component | Location | Purpose |
+|-----------|----------|---------|
+| **Discovery tab** | Left sidebar | Lists quick actions and all shared sessions in the project |
+| **Resources tab** | Left sidebar | Lists agents, tools, knowledge bases, and project storage |
+| **Chat interface** | Main editor area | Natural-language conversation with agents |
+| **Agent selector** | Chat input area | Dropdown or `@` mention to route messages to specific agents |
+| **Preferences** | Settings | Customize agentic behavior to your style |
+| **Agent logs** | Panel | Detailed view of prompts, responses, and tool call logs |
+| **Breadcrumb bar** | Top of working area | Shows current location for quick navigation |
+
+### Customizing Your Environment
+
+Because Studio is built on VS Code for the Web, you get full customization:
+
+- **Themes**: `File > Preferences > Color Theme` or `Ctrl+K Ctrl+T`
+- **Layout**: Drag and drop panels, resize sidebar, split editors
+- **Multiple sessions**: Open multiple shared sessions in separate tabs to compare results
+
+---
+
+## 11.9 Agents in Discovery Studio
+
+### The Default Discovery Agent
+
+Every project comes with a built-in **Discovery** agent that you can use immediately — no configuration needed. This is the same agent that powers the "What would you like to discover today?" prompt you saw in the screenshot.
+
+### Creating a Custom Agent
+
+To create a domain-specific agent (e.g., a TargetAssessmentAgent for RA):
+
+1. Sign in to Discovery Studio and open your project.
+2. In the **Resources** tab (left sidebar), find the **AGENTS (FOUNDRY)** section.
+3. Click the **+** button next to AGENTS.
+4. Fill in the agent details:
+   - **Name**: `TargetAssessmentAgent`
+   - **Description**: `Evaluates gene targets for Rheumatoid Arthritis by scoring genetic evidence, druggability, clinical precedent, and safety across internal and public data sources.`
+5. Under **Chat model**, select your deployed model (e.g., Claude Opus 4.6).
+6. Enter agent **Instructions**:
+   ```
+   You are a drug target assessment expert specializing in Rheumatoid 
+   Arthritis. When asked to evaluate a gene target, score it on 6 
+   dimensions (1-5 each): Genetic Evidence, Biological Rationale, 
+   Druggability, Clinical Precedent, Internal Data Support, and 
+   Safety/Selectivity. Always cite specific sources for each score.
+   Use available Knowledge Bases and Tools to gather evidence.
+   ```
+7. Click **Create agent**.
+
+The agent now appears in your Resources pane and can be selected in any shared session.
+
+> **Note**: You can create multiple agents. To add more, click the **+** button next to Agents and select **Create new agent**.
+
+---
+
+## 11.10 Shared Sessions — Collaborative Research
+
+Shared sessions are the primary research interface in Discovery Studio. They are:
+
+- **Conversational** — chat with one or more agents using natural language
+- **Collaborative** — shared between all users with access to the same project
+- **Persistent** — sessions are saved and can be resumed later
+- **Rich** — agents can generate HTML reports, data tables, calculations, and analyses
+
+### Creating a Shared Session
+
+There are two ways:
+
+**Option A — Type in the Welcome page chat box:**
+1. On the project Welcome page, type a prompt in the chat box.
+2. Click **Send**.
+3. A new shared session is automatically created and the agent responds.
+
+**Option B — From the Discovery tab:**
+1. In the Discovery tab (left sidebar), select **New shared session**.
+2. A blank session opens in the editor area.
+
+### Chatting in a Shared Session
+
+1. Select an agent using the **agent selector dropdown** in the chat input area, or type `@AgentName` to route a message to a specific agent.
+2. Enter your prompt and click **Send**.
+3. The agent responds with text, citations, and potentially generated outputs (reports, tables).
+
+### Session Contents
+
+Each shared session contains:
+- A conversational thread with one or more agents
+- Agent-generated outputs (HTML reports, calculations, data analyses)
+- A **summary section** that updates as the session progresses
+
+---
+
+## 11.11 Hands-On: Running a Research Session for RA
+
+Let's walk through a complete research session in Discovery Studio for our Rheumatoid Arthritis project.
+
+### Step 1: Open Your Project
+
+1. From the Home page, click your RA project in Recent Activity (or navigate via Workspaces → your workspace → your project).
+2. The project opens in the VS Code for the Web environment.
+
+### Step 2: Start a Shared Session
+
+On the Welcome page, type:
+
 ```
-Click [Help me get started]
+I want to evaluate TYK2 as a therapeutic target for Rheumatoid Arthritis.
+Search available knowledge bases and public literature. Score it on genetic 
+evidence, biological rationale, druggability, clinical precedent, internal 
+data support, and safety/selectivity. Provide citations for each dimension.
 ```
 
-The agent will ask about your research goals and walk you through the available capabilities.
+Click **Send**. A new shared session is created.
 
-### 2. Research
+### Step 3: The Discovery Agent Responds
 
-Launches a focused research session:
-- Searches across all connected Knowledge Bases
-- Queries live external sources (PubMed, NCBI, UniProt)
-- Synthesizes findings with citations
-- Produces a structured research summary
+The default Discovery agent will:
+1. Search connected Knowledge Bases for TYK2 evidence
+2. Query available tools (PubMed, NCBI, UniProt) for public data
+3. Synthesize findings into a structured assessment
+4. Score each dimension with explicit citations
 
-**Task 11.1** — Start a Research session:
+### Step 4: Route to a Custom Agent
+
+If you created the `TargetAssessmentAgent`, switch to it for a more focused analysis:
+
 ```
-Click [Research], then enter:
-
-What is the current state of TYK2 inhibitor development for 
-autoimmune diseases? Include clinical trial status, approved 
-drugs, and emerging compounds in the pipeline.
-```
-
-### 3. Explore Agents & Capabilities
-
-Browse all available AI agents and tools:
-- See which agents are configured for your project
-- Understand each agent's expertise and tools
-- Invoke specific agents for targeted tasks
-
-**Task 11.2** — Explore available agents:
-```
-Click [Explore agents & capabilities]
+@TargetAssessmentAgent Compare TYK2 and BTK as therapeutic targets for 
+Rheumatoid Arthritis. Which has stronger overall evidence? Present a 
+side-by-side scoring table.
 ```
 
-You'll see agents like:
-- **Literature Review Agent** — searches and synthesizes publications
-- **Target Assessment Agent** — scores gene targets on multiple dimensions
-- **Clinical Evidence Agent** — focuses on trial data and outcomes
-- **Data Analysis Agent** — runs computational analyses
+### Step 5: Ask Follow-Up Questions
 
-### 4. Plan
+Continue the conversation:
 
-Creates a structured research plan with milestones:
-- Breaks complex goals into phases
-- Assigns tasks to appropriate agents
-- Tracks progress through each phase
-- Produces a timeline with dependencies
-
-**Task 11.3** — Create a research plan:
 ```
-Click [Plan], then enter:
+What are the main risks or counter-evidence against TYK2? Are there 
+any failed clinical trials I should be aware of?
+```
 
-Plan a 4-week target validation study for TYK2 in Rheumatoid 
-Arthritis. Include literature review, independent expression 
-validation, clinical evidence assessment, and a final 
-go/no-go recommendation report.
+```
+Search ClinicalTrials.gov for active Phase II/III trials targeting TYK2 
+in autoimmune diseases. Summarize their status and preliminary results.
+```
+
+### Step 6: Review Generated Outputs
+
+As the agent works, it may generate:
+- Structured evidence tables (viewable inline)
+- HTML reports (openable in a new tab)
+- Citation lists with links to sources
+- Scoring matrices
+
+These outputs persist with the shared session and are visible to all team members with project access.
+
+---
+
+## 11.12 Managing Knowledge Bases in Studio
+
+From the **Resources** tab → **Knowledge** section, you can:
+
+| Action | How |
+|--------|-----|
+| View existing Knowledge Bases | Listed in the Knowledge section |
+| Create a new Knowledge Base | Click **+** next to Knowledge |
+| Upload documents | Select a Knowledge Base → add documents |
+| Check indexing status | Status indicator next to each KB |
+
+Knowledge Bases in Studio are the enterprise equivalent of local Bookshelves. They use the same GraphRAG indexing but run on cloud infrastructure with:
+- GPU-accelerated indexing
+- Team-wide access (RBAC-controlled)
+- Larger document capacity
+- Automated scheduled ingestion
+
+### Knowledge Bases for Our RA Project
+
+Create Knowledge Bases that mirror our local Bookshelves:
+
+| Knowledge Base | Contents | Source |
+|---------------|----------|--------|
+| `InternalResearchData` | RNA-seq, screening, immunology reports | Upload from `sample-data/internal/` |
+| `PublicLiterature` | Curated RA publications | Upload from `sample-data/public-literature/` |
+| `ClinicalEvidence` | Trial summaries, outcomes data | Curated clinical documents |
+
+---
+
+## 11.13 Managing Tools in Studio
+
+From the **Resources** tab → **Tools** section, browse computational tools available to agents:
+
+- Tools are shared across all agents in the project
+- Enable/disable tools to control what agents can access
+- Tools include MCP-based connectors (PubMed, NCBI, UniProt) and computational tools
+
+---
+
+## 11.14 Managing Data in Studio
+
+The **Data** section provides access to storage containers linked to your project:
+
+- **Input data**: Upload datasets for analysis
+- **Output data**: Access agent-generated results
+- **Storage assets**: Browse all files in project storage containers
+
+This connects to the Azure storage deployed in Chapter 8.
+
+---
+
+## 11.15 Discovery Studio vs. Local Discovery App
+
+| Aspect | Local Discovery App (VS Code Extension) | Microsoft Discovery Studio (Web) |
+|--------|----------------------------------------|----------------------------------|
+| **Access** | VS Code on your machine | Any modern browser — no install |
+| **Infrastructure** | Local — no Azure required | Requires Azure-deployed Workspace |
+| **Collaboration** | Single user | Shared sessions across team |
+| **Knowledge** | Local Bookshelves (on disk) | Cloud Knowledge Bases (RBAC, scalable) |
+| **Agents** | Local agents | Foundry-backed agents with model selection |
+| **Customization** | Full VS Code desktop | Full VS Code for the Web |
+| **Data** | Local files | Azure storage containers |
+| **Offline** | ✅ Works offline | ❌ Requires internet |
+| **Best for** | Personal exploration, prototyping, development | Team research, collaboration, production workflows |
+
+### Recommended Workflow
+
+1. **Explore locally** (Chapters 1-7): Use the local Discovery App to prototype Bookshelves, test queries, and develop your research approach.
+2. **Deploy infrastructure** (Chapter 8): Set up Azure Workspace, model deployments, and storage.
+3. **Scale to Studio** (This chapter): Move validated knowledge to enterprise Knowledge Bases, create shared sessions for team collaboration, and use custom agents for repeatable workflows.
+
+---
+
+## 11.16 Quick Actions in Studio
+
+The project Welcome page provides quick-action buttons for common workflows:
+
+| Button | What It Does |
+|--------|-------------|
+| **Help me get started** | Guided onboarding — introduces available agents and suggests workflows |
+| **Research** | Launches a focused research session across Knowledge Bases and tools |
+| **Explore agents & capabilities** | Browse all available agents and their capabilities |
+| **Plan** | Creates a structured research plan with milestones and tasks |
+
+**Task 11.1** — Try each quick action:
+
+```
+1. Click [Help me get started] — follow the guided tour
+2. Click [Research] → enter: "What is known about TYK2 inhibitors 
+   for autoimmune diseases?"
+3. Click [Explore agents & capabilities] — review available agents
+4. Click [Plan] → enter: "Plan a 4-week target validation study 
+   for TYK2 in Rheumatoid Arthritis"
 ```
 
 ---
 
-## 11.6 Creating and Managing Sessions
-
-### New Session
-
-Each research question or investigation gets its own **Session**. A Session:
-- Captures the full conversation history
-- Tracks all artifacts generated (documents, tables, figures)
-- Can be resumed later
-- Can be shared with team members
-
-**To create a session**:
-1. Click **New Session** in the sidebar.
-2. Describe your objective in the prompt box.
-3. The session begins, and Discovery orchestrates the work.
-
-### Session Artifacts
-
-As you work, Discovery generates artifacts that appear in the **SESSION ARTIFACTS** panel at the bottom:
-- Research summaries (Markdown)
-- Evidence tables (structured data)
-- Comparison matrices
-- Citation lists
-- Figures and visualizations
-
-These artifacts persist with the session and can be:
-- Downloaded individually
-- Exported as a complete research package
-- Shared with collaborators
-- Referenced in new sessions
-
----
-
-## 11.7 Knowledge Bases vs. Local Bookshelves
-
-| Feature | Local Bookshelf (VS Code) | Enterprise Knowledge Base (Web) |
-|---------|---------------------------|----------------------------------|
-| **Storage** | On your machine | Azure cloud (managed) |
-| **Access** | Single user | Team-wide, RBAC-controlled |
-| **Indexing** | Local GraphRAG | Enterprise GraphRAG with GPU acceleration |
-| **Scale** | Hundreds of documents | Millions of documents |
-| **Freshness** | Manual re-index | Automated scheduled ingestion |
-| **Use case** | Personal exploration, prototyping | Production team workflows |
-
-> **Key insight**: Start with local Bookshelves for exploration (Chapters 3-4), then promote validated knowledge to enterprise Knowledge Bases for team-wide access.
-
----
-
-## 11.8 Enterprise Web vs. VS Code Extension — When to Use Each
-
-| Scenario | Use VS Code Extension | Use Enterprise Web |
-|----------|----------------------|-------------------|
-| Writing code alongside research | ✅ | |
-| Quick personal exploration | ✅ | |
-| Team collaboration on findings | | ✅ |
-| Presenting to stakeholders | | ✅ |
-| Long-running batch analysis | | ✅ |
-| Offline/air-gapped research | ✅ | |
-| Managing large Knowledge Bases | | ✅ |
-| Prototyping new Bookshelves | ✅ | |
-| Scheduled automated sweeps | | ✅ |
-| Notebook development | ✅ | |
-
-Both interfaces share the same underlying AI capabilities — agents, knowledge bases, and tools. The difference is the **interaction model**: VS Code is developer-centric and local-first; the web interface is session-based and collaboration-first.
-
----
-
-## 11.9 Demo Walkthrough — PET Plastic Decomposition Example
-
-The screenshot shows a real Discovery Enterprise deployment for a materials science team working on **PET plastic decomposition** (enzymatic degradation of polyethylene terephthalate). Here's how they've organized their workspace:
-
-### Their Collections
-
-| Collection | Purpose |
-|-----------|---------|
-| Computational design | Enzyme engineering computational methods |
-| Direct evolution | Directed evolution experimental results |
-| Polymer chemistry | PET polymer structure and degradation chemistry |
-| Industrial biocatalysis | Scale-up and industrial enzyme application |
-| PET Decomposition | Core project — all PET degradation evidence |
-
-### How This Maps to Our RA Lab
-
-You can replicate the same organizational pattern for Rheumatoid Arthritis:
-
-| Their Collection | Our Equivalent |
-|-----------------|----------------|
-| Computational design | Target modeling & structure prediction |
-| Direct evolution | Compound screening & optimization |
-| Polymer chemistry | Immunology pathway chemistry |
-| Industrial biocatalysis | Drug delivery & formulation |
-| PET Decomposition | RA Target Identification (core) |
-
-### Creating Your Collections
-
-**Task 11.4** — Set up RA collections in Enterprise:
-```
-In the Discovery Enterprise web interface:
-
-1. Click "New collection" → name it "RA - JAK-STAT Signaling"
-2. Click "New collection" → name it "RA - Clinical Evidence" 
-3. Click "New collection" → name it "RA - Internal Experiments"
-4. Click "New collection" → name it "RA - Target Validation"
-5. Click "New collection" → name it "RA - Druggability Assessment"
-
-Then add relevant Knowledge Bases to each collection.
-```
-
----
-
-## 11.10 Running a Complete Research Session
-
-Here's a full walkthrough of an Enterprise web session for our RA project:
-
-### Step 1: Start a New Session
-
-Click **New Session** and enter:
-
-```
-I want to assess whether TYK2 is a viable therapeutic target for 
-Rheumatoid Arthritis. Search across all our knowledge bases and 
-public sources to build a comprehensive evidence dossier. Score it 
-on genetic evidence, biological rationale, druggability, clinical 
-precedent, safety, and internal data support.
-```
-
-### Step 2: Discovery Orchestrates
-
-The system will:
-1. Query your RA Knowledge Bases for internal evidence
-2. Search PubMed for published TYK2/RA literature
-3. Check ClinicalTrials.gov for active TYK2 trials
-4. Pull UniProt data on TYK2 protein structure
-5. Cross-reference with your internal RNA-seq and screening data
-6. Score each dimension with citations
-
-### Step 3: Review Session Artifacts
-
-After a few minutes, the SESSION ARTIFACTS panel shows:
-- `TYK2_evidence_dossier.md` — Full evidence report
-- `TYK2_scoring_table.md` — 6-dimension scoring with justifications
-- `TYK2_clinical_trials.md` — Active trial summary
-- `TYK2_literature_review.md` — Top publications synthesized
-
-### Step 4: Iterate
-
-Ask follow-up questions in the same session:
-
-```
-What are the main risks or counter-evidence against TYK2 as a target?
-Are there any failed trials or safety signals I should know about?
-```
-
-```
-Compare TYK2 against BTK as alternative targets. Which has stronger 
-overall evidence for RA?
-```
-
----
-
-## 11.11 Checkpoint
+## 11.17 Checkpoint
 
 Before proceeding to Chapter 12, confirm:
 
-- [ ] You understand the difference between the VS Code extension and the Enterprise web interface
-- [ ] You know when to use each interface
-- [ ] You can navigate the sidebar (Home, Project Data, AI Capabilities, Jobs, Collections)
-- [ ] You understand what Collections are and how to create them
-- [ ] You've tried the quick-action buttons (Research, Plan, Explore agents)
-- [ ] You know how Sessions work and how artifacts are generated
-- [ ] You understand the relationship between local Bookshelves and enterprise Knowledge Bases
+- [ ] You can sign in to Discovery Studio at https://studio.discovery.microsoft.com
+- [ ] You can navigate the sidebar (Home, Workspaces, Projects, Resources)
+- [ ] You understand that Studio is built on VS Code for the Web
+- [ ] You've opened a project and seen the Discovery tab and Resources tab
+- [ ] You've created (or understand how to create) a custom agent
+- [ ] You've started a shared session and chatted with an agent
+- [ ] You understand the difference between local Bookshelves and cloud Knowledge Bases
+- [ ] You know when to use Studio (collaboration, team workflows) vs. the local app (prototyping, offline)
 
 ---
 
