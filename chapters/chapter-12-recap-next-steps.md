@@ -20,7 +20,7 @@ Over the course of 11 chapters, you built a complete AI-augmented target assessm
 | **8. Enterprise Infrastructure** | Deployed Azure infrastructure for team-wide access | Scalable, secure, enterprise-grade platform |
 | **9. HPC & Scale** | Connected to HPC for large-scale analysis | Roadmap from laptop to cloud supercomputing |
 | **10. Notebooks** | Documented everything in Wiki, Brief, and Jupyter | Traceable, publishable, version-controllable reports |
-| **11. Enterprise Web Sessions** | Used the browser-based Discovery Enterprise interface | Collaborative sessions, Collections, and team workflows |
+| **11. Target Assessment in Studio** | Repeated the full target ID → prioritization → validation workflow in Discovery Studio | Cloud Knowledge Bases, shared sessions, team collaboration, browser-based research |
 
 ---
 

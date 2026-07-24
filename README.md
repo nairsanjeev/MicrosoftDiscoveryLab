@@ -196,7 +196,7 @@ By completing this lab, you will be able to:
 | 8 | [Enterprise Infrastructure Deployment](chapters/chapter-08-enterprise-infrastructure.md) | Deploy workspace, supercomputer, node pools, projects, and agents on Azure |
 | 9 | [High-Dimensional Data Analysis & HPC Integration](chapters/chapter-09-hpc-and-analysis.md) | Leverage supercomputer node pools for large-scale analysis |
 | 10 | [Capturing Findings — Notebooks & Reporting](chapters/chapter-10-notebooks-reporting.md) | Document findings in Discovery Notebooks, publish reports |
-| 11 | [Microsoft Discovery Studio — Web Research Environment](chapters/chapter-11-enterprise-web-sessions.md) | Use the browser-based Discovery Studio (studio.discovery.microsoft.com) for shared sessions, agents, and team collaboration |
+| 11 | [Target Assessment in Microsoft Discovery Studio](chapters/chapter-11-enterprise-web-sessions.md) | Repeat the full target ID → prioritization → validation workflow in the browser-based Discovery Studio with shared sessions and team collaboration |
 | 12 | [End-to-End Recap & Next Steps](chapters/chapter-12-recap-next-steps.md) | Review the complete workflow, cost considerations, scaling to enterprise |
 
 ---

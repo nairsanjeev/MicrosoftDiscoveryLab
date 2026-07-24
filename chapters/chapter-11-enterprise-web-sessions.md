@@ -1,407 +1,399 @@
-# Chapter 11: Microsoft Discovery Studio — The Web Research Environment
+# Chapter 11: Target Assessment in Microsoft Discovery Studio
 
-> **Goal**: Learn to use **Microsoft Discovery Studio** — the browser-based, collaborative research environment for Microsoft Discovery. Studio is built on Visual Studio Code for the Web and provides shared sessions, agents, knowledge bases, tools, and data management without any local installation.
+> **Goal**: Repeat the complete target identification, prioritization, and validation workflow (Chapters 4-7) — but this time entirely in **Microsoft Discovery Studio**, the browser-based collaborative research environment. Experience how the same scientific workflow translates to the enterprise web platform with shared sessions, team agents, and cloud-backed Knowledge Bases.
 
 ---
 
 ## 11.1 What You Will Learn
 
-- What Microsoft Discovery Studio is and how it differs from the local VS Code extension
-- How to sign in and navigate the Studio interface (Home, Workspaces, Projects, Resources)
-- How to create a project and configure agents
-- How to run shared sessions — collaborative research conversations with AI agents
-- How to manage Knowledge Bases, Tools, and Data from the web
-- When to use Studio vs. the local Discovery App
+- How to sign in to Discovery Studio and navigate the interface
+- How to create Knowledge Bases (the cloud equivalent of local Bookshelves)
+- How to connect external tools (PubMed, NCBI, UniProt) in the enterprise environment
+- How to run a complete target identification workflow using shared sessions
+- How to score and prioritize targets using a custom agent
+- How to validate targets with cross-referencing across Knowledge Bases and live APIs
+- How shared sessions enable team collaboration on the same research
 
 ---
 
-## 11.2 What Is Microsoft Discovery Studio?
+## 11.2 Prerequisites
 
-Microsoft Discovery Studio is the **web-based, unified research environment** for Microsoft Discovery. It runs entirely in the browser at:
+You need the infrastructure deployed in Chapter 8:
 
-> **https://studio.discovery.microsoft.com**
-
-Key characteristics:
-
-| Feature | Detail |
-|---------|--------|
-| **Built on** | Visual Studio Code for the Web |
-| **Installation** | None — browser only (any modern browser) |
-| **Authentication** | Microsoft Entra ID (SSO) |
-| **Collaboration** | Shared sessions between team members on the same project |
-| **Customization** | Full VS Code theming, layout, split editors |
-| **Infrastructure** | Requires an Azure-deployed Discovery Workspace (Chapter 8) |
-
-> **Key distinction**: The local Discovery App (Chapters 1-10) runs on your machine with local Bookshelves and is single-user. Discovery Studio runs in the cloud, backed by enterprise infrastructure, with shared sessions and team-wide Knowledge Bases.
+- [ ] A Discovery Workspace accessible at https://studio.discovery.microsoft.com
+- [ ] A Project created within the workspace (e.g., `prj-ra-targetlab`)
+- [ ] A chat model deployment active (e.g., `gpt-5-2`)
+- [ ] The `TargetAssessmentAgent` created in Chapter 8 (or the default Discovery agent)
+- [ ] Storage container linked to the project
+- [ ] **Scientist** or **Platform Administrator** role assigned
 
 ---
 
-## 11.3 Prerequisites
-
-Before using Discovery Studio, you need:
-
-1. **A deployed Discovery Workspace** — set up via Azure portal or Bicep (see Chapter 8)
-2. **A Project** created within that workspace
-3. **A persona role assignment** — either **Scientist** or **Platform Administrator**
-4. **A chat model deployment** — an LLM deployed in your workspace (e.g., Claude Opus 4.6, GPT-4)
-
-If you completed Chapter 8, you already have all of this in place.
-
----
-
-## 11.4 Sign In to Discovery Studio
+## 11.3 Sign In and Navigate to Your Project
 
 1. Open your browser and navigate to **https://studio.discovery.microsoft.com**
-2. Sign in with your **Microsoft Entra ID** credentials (work or school account).
-3. If you have access to multiple Entra tenants, click your profile icon (top-right) to select the correct tenant.
-4. You land on the **Home** page.
+2. Sign in with your Microsoft Entra ID credentials.
+3. From the sidebar, click **Projects**.
+4. Select your RA project (e.g., `prj-ra-targetlab`) — it opens in the VS Code for the Web environment.
 
-> **Tip**: You can also find the Studio URL on your Workspace's overview page in the Azure portal.
+You should see:
+- **Discovery tab** (left sidebar) — lists shared sessions and quick actions
+- **Resources tab** (left sidebar) — lists agents, tools, knowledge bases, and storage
+- **Welcome page** (center) — with a chat prompt box and quick-action buttons
 
 ---
 
-## 11.5 The Home Page
+## 11.4 Set Up Knowledge Bases (Cloud Bookshelves)
 
-After signing in, the Home page serves as your landing page:
+In the local workflow (Chapters 3-4), you created local Bookshelves. In Studio, the equivalent is **Knowledge Bases** — cloud-hosted, GraphRAG-indexed document collections that are shared across all project members.
+
+### Create the Internal Research Knowledge Base
+
+1. In the **Resources** tab, find the **KNOWLEDGE** section.
+2. Click **+** to create a new Knowledge Base.
+3. Configure:
+   - **Name**: `InternalResearchData`
+   - **Source**: Select your storage container → navigate to the internal research documents
+   - **Index type**: GraphRAG (default)
+4. Click **Create** and wait for indexing to complete.
+
+The Knowledge Base indexes the same documents you used locally:
+- RNA-seq differential expression results
+- Gene expression profiles
+- Internal target review documents
+- Screening results
+- Immunology pathway analysis
+- Prior target assessment report
+
+### Create the Public Literature Knowledge Base
+
+1. Click **+** again in the KNOWLEDGE section.
+2. Configure:
+   - **Name**: `PublicLiterature`
+   - **Source**: Storage container → public literature documents
+3. Create and wait for indexing.
+
+### Verify Knowledge Bases
+
+Both Knowledge Bases should show:
+- Document count (7 internal, 6 public literature)
+- Health status: **Healthy**
+- Index status: **Completed**
+
+> **Cloud advantage**: These Knowledge Bases are now accessible to every team member with project access — no need to distribute files or re-index locally.
+
+---
+
+## 11.5 Connect External Tools
+
+In the local workflow (Chapter 4), you enabled MCP tools individually. In Studio, tools are managed at the project level and shared across all agents.
+
+### Verify Available Tools
+
+1. In the **Resources** tab, expand the **TOOLS** section.
+2. You should see built-in Discovery tools already available.
+3. If biomedical tools (PubMed, NCBI, UniProt) are configured by your platform admin, they appear here.
+
+> **Note**: In the enterprise deployment, tool availability is managed by the Platform Administrator. The default Discovery agent has access to search Knowledge Bases. Additional external tools may need to be provisioned via the workspace configuration.
+
+### Test Tool Access
+
+Start a quick shared session to verify:
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│  Microsoft Discovery Studio                                      │
-│                                                                  │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
-│  │ Getting      │  │ Learn More   │  │ What's New   │          │
-│  │ Started      │  │              │  │              │          │
-│  └──────────────┘  └──────────────┘  └──────────────┘          │
-│                                                                  │
-│  RECENT ACTIVITY                                                 │
-│  • Project: RA-Target-Assessment (last accessed 2h ago)          │
-│  • Project: PET-Decomposition (last accessed yesterday)          │
-│  • Workspace: mdqlabs-dev-uksouth (3 projects)                   │
-└─────────────────────────────────────────────────────────────────┘
+Search PubMed for recent publications on TYK2 and its role in 
+Rheumatoid Arthritis. Return the top 3 findings.
 ```
 
-| Section | Purpose |
-|---------|---------|
-| **Getting Started** | Launch the project creation flow |
-| **Learn More** | Access documentation and introductory guides |
-| **What's New** | Latest platform announcements and features |
-| **Recent Activity** | Quick access to recently used projects and workspaces |
+If the agent responds with PubMed citations, your tools are connected.
 
 ---
 
-## 11.6 Navigation Sidebar
+## 11.6 Target Identification — Shared Session 1
 
-The sidebar is always visible on the left and provides access to all major areas:
+Now run the same target identification workflow from Chapter 5, but in a shared session.
 
-### Top-Level Navigation
+### Start the Session
 
-| Item | Purpose |
-|------|---------|
-| **Home** | Return to the landing page with getting-started cards and recent activity |
-| **Workspaces** | View and manage all workspaces you have access to |
-| **Projects** | Browse, manage, and open projects across all workspaces |
-
-### Resources
-
-| Item | Purpose |
-|------|---------|
-| **Tools** | Browse computational tools available to agents |
-| **Knowledge** | Manage Bookshelves and Knowledge Bases (GraphRAG-indexed documents that provide agents with domain-specific context) |
-| **Data** | Access and manage storage containers linked to your projects for input/output data |
-
----
-
-## 11.7 Workspaces View
-
-Select **Workspaces** from the sidebar to see all workspaces you have access to:
-
-| Column | Description |
-|--------|-------------|
-| **Name** | Workspace name (click to open) |
-| **Region** | Azure region where the workspace is deployed |
-| **Resource Group** | The Azure resource group containing workspace resources |
-| **Provisioning State** | Deployment state (Succeeded, Failed, Deleting) |
-| **Created By** | Identity that created the workspace |
-| **Created At** | Timestamp of creation |
-
-Use the **Refresh** and **Filter** controls above the table to update or narrow results.
-
-For our lab, you should see the workspace deployed in Chapter 8 (e.g., `ra-discovery-workspace` in your chosen region).
-
----
-
-## 11.8 Opening a Project
-
-When you open a project, Discovery Studio transitions into a **full Visual Studio Code for the Web environment**. This is where you conduct research.
-
-The project view includes:
-
-| Component | Location | Purpose |
-|-----------|----------|---------|
-| **Discovery tab** | Left sidebar | Lists quick actions and all shared sessions in the project |
-| **Resources tab** | Left sidebar | Lists agents, tools, knowledge bases, and project storage |
-| **Chat interface** | Main editor area | Natural-language conversation with agents |
-| **Agent selector** | Chat input area | Dropdown or `@` mention to route messages to specific agents |
-| **Preferences** | Settings | Customize agentic behavior to your style |
-| **Agent logs** | Panel | Detailed view of prompts, responses, and tool call logs |
-| **Breadcrumb bar** | Top of working area | Shows current location for quick navigation |
-
-### Customizing Your Environment
-
-Because Studio is built on VS Code for the Web, you get full customization:
-
-- **Themes**: `File > Preferences > Color Theme` or `Ctrl+K Ctrl+T`
-- **Layout**: Drag and drop panels, resize sidebar, split editors
-- **Multiple sessions**: Open multiple shared sessions in separate tabs to compare results
-
----
-
-## 11.9 Agents in Discovery Studio
-
-### The Default Discovery Agent
-
-Every project comes with a built-in **Discovery** agent that you can use immediately — no configuration needed. This is the same agent that powers the "What would you like to discover today?" prompt you saw in the screenshot.
-
-### Creating a Custom Agent
-
-To create a domain-specific agent (e.g., a TargetAssessmentAgent for RA):
-
-1. Sign in to Discovery Studio and open your project.
-2. In the **Resources** tab (left sidebar), find the **AGENTS (FOUNDRY)** section.
-3. Click the **+** button next to AGENTS.
-4. Fill in the agent details:
-   - **Name**: `TargetAssessmentAgent`
-   - **Description**: `Evaluates gene targets for Rheumatoid Arthritis by scoring genetic evidence, druggability, clinical precedent, and safety across internal and public data sources.`
-5. Under **Chat model**, select your deployed model (e.g., Claude Opus 4.6).
-6. Enter agent **Instructions**:
-   ```
-   You are a drug target assessment expert specializing in Rheumatoid 
-   Arthritis. When asked to evaluate a gene target, score it on 6 
-   dimensions (1-5 each): Genetic Evidence, Biological Rationale, 
-   Druggability, Clinical Precedent, Internal Data Support, and 
-   Safety/Selectivity. Always cite specific sources for each score.
-   Use available Knowledge Bases and Tools to gather evidence.
-   ```
-7. Click **Create agent**.
-
-The agent now appears in your Resources pane and can be selected in any shared session.
-
-> **Note**: You can create multiple agents. To add more, click the **+** button next to Agents and select **Create new agent**.
-
----
-
-## 11.10 Shared Sessions — Collaborative Research
-
-Shared sessions are the primary research interface in Discovery Studio. They are:
-
-- **Conversational** — chat with one or more agents using natural language
-- **Collaborative** — shared between all users with access to the same project
-- **Persistent** — sessions are saved and can be resumed later
-- **Rich** — agents can generate HTML reports, data tables, calculations, and analyses
-
-### Creating a Shared Session
-
-There are two ways:
-
-**Option A — Type in the Welcome page chat box:**
-1. On the project Welcome page, type a prompt in the chat box.
-2. Click **Send**.
-3. A new shared session is automatically created and the agent responds.
-
-**Option B — From the Discovery tab:**
-1. In the Discovery tab (left sidebar), select **New shared session**.
-2. A blank session opens in the editor area.
-
-### Chatting in a Shared Session
-
-1. Select an agent using the **agent selector dropdown** in the chat input area, or type `@AgentName` to route a message to a specific agent.
-2. Enter your prompt and click **Send**.
-3. The agent responds with text, citations, and potentially generated outputs (reports, tables).
-
-### Session Contents
-
-Each shared session contains:
-- A conversational thread with one or more agents
-- Agent-generated outputs (HTML reports, calculations, data analyses)
-- A **summary section** that updates as the session progresses
-
----
-
-## 11.11 Hands-On: Running a Research Session for RA
-
-Let's walk through a complete research session in Discovery Studio for our Rheumatoid Arthritis project.
-
-### Step 1: Open Your Project
-
-1. From the Home page, click your RA project in Recent Activity (or navigate via Workspaces → your workspace → your project).
-2. The project opens in the VS Code for the Web environment.
-
-### Step 2: Start a Shared Session
-
-On the Welcome page, type:
+1. On the Welcome page, type your research goal in the chat box:
 
 ```
-I want to evaluate TYK2 as a therapeutic target for Rheumatoid Arthritis.
-Search available knowledge bases and public literature. Score it on genetic 
-evidence, biological rationale, druggability, clinical precedent, internal 
-data support, and safety/selectivity. Provide citations for each dimension.
+I need to identify candidate therapeutic targets for Rheumatoid 
+Arthritis. Use both the InternalResearchData and PublicLiterature 
+knowledge bases, plus any available external tools (PubMed, NCBI).
+
+Conduct a systematic target identification:
+
+1. Search the InternalResearchData knowledge base for genes with 
+   significant differential expression in our RNA-seq studies
+2. Search PublicLiterature for the most-cited RA therapeutic targets 
+   from the last 5 years
+3. Cross-reference candidates against NCBI for gene function and 
+   pathway involvement
+4. Identify the top 10 candidate genes that appear in both our 
+   internal data AND published literature
+5. Present results in a table: Gene | Internal Evidence | Public 
+   Evidence | Pathways | Strength of Association
+
+Name this investigation "RA Target Identification — Round 1"
 ```
 
-Click **Send**. A new shared session is created.
+2. Click **Send** — a new shared session is created automatically.
 
-### Step 3: The Discovery Agent Responds
+### Review the Results
 
-The default Discovery agent will:
-1. Search connected Knowledge Bases for TYK2 evidence
-2. Query available tools (PubMed, NCBI, UniProt) for public data
-3. Synthesize findings into a structured assessment
-4. Score each dimension with explicit citations
+The Discovery agent will:
+- Query both Knowledge Bases using GraphRAG
+- Search external tools for public evidence
+- Synthesize findings into a ranked table
+- Cite specific documents from your Knowledge Bases
 
-### Step 4: Route to a Custom Agent
+**Expected output**: A table of 10-15 candidate genes with evidence from both internal and public sources. Based on our sample data, top candidates should include:
 
-If you created the `TargetAssessmentAgent`, switch to it for a more focused analysis:
+| Gene | Internal Evidence | Public Evidence | Key Pathway |
+|------|------------------|-----------------|-------------|
+| TYK2 | High DE in RNA-seq study-001, study-002 | 50+ publications, validated target | JAK-STAT signaling |
+| BTK | DE in study-002, screening hit | Active clinical trials (fenebrutinib) | B-cell receptor signaling |
+| JAK1 | Strong DE across all studies | Tofacitinib approved (JAK inhibitor) | JAK-STAT signaling |
+| IRAK4 | Moderate DE, pathway analysis hit | Emerging target, Phase II trials | TLR/IL-1R signaling |
+| SYK | Screening hit, immunology pathway | Fostamatinib (approved for ITP) | B-cell/myeloid signaling |
 
-```
-@TargetAssessmentAgent Compare TYK2 and BTK as therapeutic targets for 
-Rheumatoid Arthritis. Which has stronger overall evidence? Present a 
-side-by-side scoring table.
-```
+### Follow-Up Queries
 
-### Step 5: Ask Follow-Up Questions
-
-Continue the conversation:
-
-```
-What are the main risks or counter-evidence against TYK2? Are there 
-any failed clinical trials I should be aware of?
-```
+Continue in the same session:
 
 ```
-Search ClinicalTrials.gov for active Phase II/III trials targeting TYK2 
-in autoimmune diseases. Summarize their status and preliminary results.
-```
-
-### Step 6: Review Generated Outputs
-
-As the agent works, it may generate:
-- Structured evidence tables (viewable inline)
-- HTML reports (openable in a new tab)
-- Citation lists with links to sources
-- Scoring matrices
-
-These outputs persist with the shared session and are visible to all team members with project access.
-
----
-
-## 11.12 Managing Knowledge Bases in Studio
-
-From the **Resources** tab → **Knowledge** section, you can:
-
-| Action | How |
-|--------|-----|
-| View existing Knowledge Bases | Listed in the Knowledge section |
-| Create a new Knowledge Base | Click **+** next to Knowledge |
-| Upload documents | Select a Knowledge Base → add documents |
-| Check indexing status | Status indicator next to each KB |
-
-Knowledge Bases in Studio are the enterprise equivalent of local Bookshelves. They use the same GraphRAG indexing but run on cloud infrastructure with:
-- GPU-accelerated indexing
-- Team-wide access (RBAC-controlled)
-- Larger document capacity
-- Automated scheduled ingestion
-
-### Knowledge Bases for Our RA Project
-
-Create Knowledge Bases that mirror our local Bookshelves:
-
-| Knowledge Base | Contents | Source |
-|---------------|----------|--------|
-| `InternalResearchData` | RNA-seq, screening, immunology reports | Upload from `sample-data/internal/` |
-| `PublicLiterature` | Curated RA publications | Upload from `sample-data/public-literature/` |
-| `ClinicalEvidence` | Trial summaries, outcomes data | Curated clinical documents |
-
----
-
-## 11.13 Managing Tools in Studio
-
-From the **Resources** tab → **Tools** section, browse computational tools available to agents:
-
-- Tools are shared across all agents in the project
-- Enable/disable tools to control what agents can access
-- Tools include MCP-based connectors (PubMed, NCBI, UniProt) and computational tools
-
----
-
-## 11.14 Managing Data in Studio
-
-The **Data** section provides access to storage containers linked to your project:
-
-- **Input data**: Upload datasets for analysis
-- **Output data**: Access agent-generated results
-- **Storage assets**: Browse all files in project storage containers
-
-This connects to the Azure storage deployed in Chapter 8.
-
----
-
-## 11.15 Discovery Studio vs. Local Discovery App
-
-| Aspect | Local Discovery App (VS Code Extension) | Microsoft Discovery Studio (Web) |
-|--------|----------------------------------------|----------------------------------|
-| **Access** | VS Code on your machine | Any modern browser — no install |
-| **Infrastructure** | Local — no Azure required | Requires Azure-deployed Workspace |
-| **Collaboration** | Single user | Shared sessions across team |
-| **Knowledge** | Local Bookshelves (on disk) | Cloud Knowledge Bases (RBAC, scalable) |
-| **Agents** | Local agents | Foundry-backed agents with model selection |
-| **Customization** | Full VS Code desktop | Full VS Code for the Web |
-| **Data** | Local files | Azure storage containers |
-| **Offline** | ✅ Works offline | ❌ Requires internet |
-| **Best for** | Personal exploration, prototyping, development | Team research, collaboration, production workflows |
-
-### Recommended Workflow
-
-1. **Explore locally** (Chapters 1-7): Use the local Discovery App to prototype Bookshelves, test queries, and develop your research approach.
-2. **Deploy infrastructure** (Chapter 8): Set up Azure Workspace, model deployments, and storage.
-3. **Scale to Studio** (This chapter): Move validated knowledge to enterprise Knowledge Bases, create shared sessions for team collaboration, and use custom agents for repeatable workflows.
-
----
-
-## 11.16 Quick Actions in Studio
-
-The project Welcome page provides quick-action buttons for common workflows:
-
-| Button | What It Does |
-|--------|-------------|
-| **Help me get started** | Guided onboarding — introduces available agents and suggests workflows |
-| **Research** | Launches a focused research session across Knowledge Bases and tools |
-| **Explore agents & capabilities** | Browse all available agents and their capabilities |
-| **Plan** | Creates a structured research plan with milestones and tasks |
-
-**Task 11.1** — Try each quick action:
-
-```
-1. Click [Help me get started] — follow the guided tour
-2. Click [Research] → enter: "What is known about TYK2 inhibitors 
-   for autoimmune diseases?"
-3. Click [Explore agents & capabilities] — review available agents
-4. Click [Plan] → enter: "Plan a 4-week target validation study 
-   for TYK2 in Rheumatoid Arthritis"
+For the top 5 candidates (TYK2, BTK, JAK1, IRAK4, SYK), provide more 
+detail on each:
+1. What specific evidence do we have from our internal RNA-seq studies?
+2. What is the magnitude of differential expression?
+3. In which cell types / tissues is this gene most relevant?
+4. Are there any known safety concerns?
 ```
 
 ---
 
-## 11.17 Checkpoint
+## 11.7 Target Prioritization — Shared Session 2
+
+Now use your custom `TargetAssessmentAgent` to score and rank targets, replicating the Chapter 6 workflow.
+
+### Start a New Session for Prioritization
+
+1. Click **New shared session** in the Discovery tab.
+2. Select your `TargetAssessmentAgent` from the agent dropdown (or type `@TargetAssessmentAgent`).
+3. Enter:
+
+```
+@TargetAssessmentAgent Score and rank the following candidate 
+therapeutic targets for Rheumatoid Arthritis: TYK2, BTK, JAK1, IRAK4, SYK
+
+Use this 6-dimension scoring framework (each dimension scored 1-5):
+
+1. Genetic Evidence - Strength of genetic association with RA
+   (5 = GWAS hit + functional validation, 1 = single mention)
+2. Biological Rationale - Mechanistic understanding
+   (5 = well-characterized disease mechanism, 1 = association only)
+3. Druggability - Feasibility of therapeutic intervention
+   (5 = existing drugs/small molecules, 1 = no known binding sites)
+4. Clinical Precedent - Existing clinical evidence
+   (5 = active Phase II/III for RA, 1 = no clinical data)
+5. Internal Data Support - Our proprietary evidence strength
+   (5 = strong experimental validation, 1 = no internal data)
+6. Safety/Selectivity - Expected therapeutic window
+   (5 = tissue-restricted, low off-target, 1 = ubiquitous expression)
+
+For each gene and each dimension:
+- Search the InternalResearchData knowledge base for internal evidence
+- Search PublicLiterature for published evidence
+- Query external tools for additional public data
+- Provide a score with explicit justification and citations
+
+Present the final ranking as a table sorted by total score.
+```
+
+### Review the Prioritization Results
+
+The agent should produce a structured scoring table:
+
+| Rank | Gene | Genetic | Mechanism | Druggable | Clinical | Internal | Safety | Total (/30) | Recommendation |
+|------|------|---------|-----------|-----------|----------|----------|--------|-------------|----------------|
+| 1 | TYK2 | 5 | 4 | 4 | 4 | 5 | 4 | 26 | **Strong** — pursue |
+| 2 | BTK | 4 | 5 | 4 | 3 | 4 | 3 | 23 | **Strong** — pursue |
+| 3 | JAK1 | 4 | 4 | 5 | 5 | 3 | 2 | 23 | **Strong** — but safety concern |
+| 4 | IRAK4 | 3 | 3 | 3 | 2 | 3 | 4 | 18 | **Moderate** — emerging |
+| 5 | SYK | 3 | 3 | 4 | 2 | 3 | 3 | 18 | **Moderate** — needs validation |
+
+### Deep Dive on Top Target
+
+```
+@TargetAssessmentAgent For TYK2 (our top-ranked target), provide a 
+detailed evidence dossier:
+
+1. All genetic evidence with specific citations from our knowledge bases
+2. The biological mechanism linking TYK2 to RA pathogenesis
+3. Known TYK2 inhibitors and their clinical status
+4. Our internal experimental data supporting TYK2
+5. Any counter-evidence or risks
+6. Comparison with deucravacitinib (approved TYK2 inhibitor for psoriasis)
+7. Gap analysis — what additional evidence would strengthen the case?
+```
+
+---
+
+## 11.8 Target Validation — Shared Session 3
+
+Create a third shared session focused on validation, replicating the Chapter 7 workflow.
+
+### Start the Validation Session
+
+1. Click **New shared session**.
+2. Enter:
+
+```
+Conduct independent validation of our top 5 RA target candidates 
+(TYK2, BTK, JAK1, IRAK4, SYK). For each target, perform:
+
+VALIDATION 1: Independent Expression Data
+- Search for public RNA-seq or microarray studies (NOT from our 
+  internal data) that show differential expression in RA
+- Check if direction and magnitude are consistent with our findings
+- Report: how many independent datasets confirm each target?
+
+VALIDATION 2: Clinical Evidence
+- Search ClinicalTrials.gov for active trials targeting each gene in RA
+- For targets with trials: what phase? what compound? any results?
+- For targets without RA trials: any trials in related autoimmune diseases?
+
+VALIDATION 3: Functional Evidence
+- Search for CRISPR, siRNA, or genetic model studies validating each 
+  gene's role in RA or inflammation
+- Any loss-of-function variants that inform human biology?
+
+VALIDATION 4: Counter-Evidence
+- Actively search for evidence AGAINST each target
+- Failed trials, negative results, safety signals, contradictory findings
+
+VALIDATION 5: Immunology Cross-Reference
+- Search our InternalResearchData knowledge base for immunology-specific 
+  evidence on each gene
+- Which immune cell types express these genes?
+- Any connection to T-cell, B-cell, or macrophage biology?
+
+Present a validation summary table:
+Gene | Independent Datasets | Clinical Trials | Functional Evidence | 
+Counter-Evidence | Immunology Support | Validation Confidence
+```
+
+### Review Validation Results
+
+The agent synthesizes across all evidence layers:
+
+| Gene | Independent Datasets | Clinical Trials | Functional | Counter-Evidence | Immunology | Confidence |
+|------|---------------------|-----------------|------------|-----------------|------------|------------|
+| TYK2 | 5+ datasets confirm | Deucravacitinib (Phase III, psoriasis); Phase II RA | CRISPR validated | Selective enough? | JAK-STAT in T/NK cells | **High** |
+| BTK | 3 datasets confirm | Fenebrutinib (Phase III RA), evobrutinib | KO mice protected | Infection risk? | B-cell signaling | **High** |
+| JAK1 | 8+ datasets confirm | Tofacitinib (approved RA) | Well-validated | VTE risk, infections | Broad immune signaling | **High** (but safety) |
+| IRAK4 | 2 datasets confirm | Phase II (PF-06650833) | Partial KO data | Limited human data | TLR/IL-1 in macrophages | **Moderate** |
+| SYK | 2 datasets confirm | Fostamatinib (ITP only) | KO mice data | Not pursued in RA | Myeloid + B-cell | **Moderate** |
+
+### Final Recommendation
+
+```
+Based on all validation evidence, provide a final go/no-go 
+recommendation for each target:
+
+For each gene:
+1. Overall recommendation: GO / CONDITIONAL / NO-GO
+2. Confidence level: High / Medium / Low
+3. Key strength (one sentence)
+4. Key risk (one sentence)  
+5. Recommended next experiment to address the biggest evidence gap
+```
+
+---
+
+## 11.9 Collaboration — Sharing Sessions with Team Members
+
+One of the key advantages of Discovery Studio over the local app is **shared sessions**. Everything you did in Sections 11.6-11.8 is automatically visible to team members.
+
+### How Sharing Works
+
+- All shared sessions are visible to any project member
+- Team members can:
+  - Read the full conversation history
+  - Continue the conversation with follow-up questions
+  - Switch to a different agent for a second opinion
+  - Open multiple sessions in split-view for comparison
+
+### Exercise: Parallel Investigation
+
+In a team setting, you would assign different sessions to different scientists:
+
+| Team Member | Session | Focus |
+|-------------|---------|-------|
+| Scientist A | RA Target Identification | Literature + internal data synthesis |
+| Scientist B | TYK2 Deep Dive | Detailed evidence dossier for lead target |
+| Scientist C | Counter-Evidence Search | Actively challenge all candidates |
+| Scientist D | Clinical Landscape | Competitive intelligence from trials |
+
+All work in the same project, all sessions are shared, and findings cross-pollinate.
+
+---
+
+## 11.10 Comparing the Local vs. Studio Workflows
+
+You've now completed the same scientific workflow in both environments:
+
+| Step | Local (Chapters 4-7) | Studio (This Chapter) |
+|------|---------------------|----------------------|
+| **Data setup** | Local Bookshelf + ingestion | Cloud Knowledge Base + storage upload |
+| **External tools** | MCP plugins in VS Code | Tools attached at project level |
+| **Target ID** | Copilot Chat + Bookshelf | Shared session + Knowledge Base |
+| **Prioritization** | Discovery Engine (Supervised) | Custom agent in shared session |
+| **Validation** | Multi-step prompts in Copilot | Multi-faceted single-session validation |
+| **Collaboration** | Git + share `.discovery/` folder | Built-in shared sessions |
+| **Persistence** | Files on disk | Cloud-backed, auto-saved |
+| **Access** | Your machine only | Any browser, any device |
+
+### When to Use Each
+
+| Scenario | Recommended Environment |
+|----------|------------------------|
+| First-time exploration of a new disease area | Local (fast, free, no infrastructure) |
+| Solo deep-dive with your own data | Local |
+| Team target assessment with multiple scientists | **Studio** |
+| Presenting findings to leadership | **Studio** (shareable sessions) |
+| Running large-scale analyses (HPC) | **Studio** (supercomputer node pools) |
+| Offline research (airplane, restricted network) | Local |
+| Reproducible pipeline for new projects | **Studio** (templates, shared agents) |
+
+---
+
+## 11.11 Studio-Specific Features Not Available Locally
+
+| Feature | What It Enables |
+|---------|----------------|
+| **Agent logs** | Detailed view of prompts, responses, and tool call logs (including raw output) |
+| **Multiple concurrent sessions** | Open in split tabs for side-by-side comparison |
+| **Agent selector dropdown** | Quickly switch between Discovery, TargetAssessment, or any custom agent |
+| **Session summaries** | Auto-generated summaries as the session progresses |
+| **Preferences** | Customize agentic behavior (response style, citation format, verbosity) |
+| **Project storage** | Browse input/output files directly in the sidebar |
+
+---
+
+## 11.12 Checkpoint
 
 Before proceeding to Chapter 12, confirm:
 
-- [ ] You can sign in to Discovery Studio at https://studio.discovery.microsoft.com
-- [ ] You can navigate the sidebar (Home, Workspaces, Projects, Resources)
-- [ ] You understand that Studio is built on VS Code for the Web
-- [ ] You've opened a project and seen the Discovery tab and Resources tab
-- [ ] You've created (or understand how to create) a custom agent
-- [ ] You've started a shared session and chatted with an agent
-- [ ] You understand the difference between local Bookshelves and cloud Knowledge Bases
-- [ ] You know when to use Studio (collaboration, team workflows) vs. the local app (prototyping, offline)
+- [ ] You signed in to Discovery Studio and opened your project
+- [ ] You created (or verified) Knowledge Bases for internal and public data
+- [ ] You ran a target identification shared session and got a candidate list
+- [ ] You used the TargetAssessmentAgent to score and rank targets
+- [ ] You ran a validation session with multi-dimensional evidence review
+- [ ] You understand how shared sessions enable team collaboration
+- [ ] You can compare the local vs. Studio workflows and articulate when to use each
+- [ ] Your top target recommendation (TYK2) is consistent across both environments
 
 ---
 
