@@ -36,7 +36,7 @@ For this lab, we'll create all three:
 Open Copilot Chat and run:
 
 ```
-Create a wiki notebook called "Target Assessment — [DISEASE]"
+Create a wiki notebook called "Target Assessment — Rheumatoid Arthritis"
 ```
 
 Or via the sidebar: Notebooks panel → click **+** → choose **Wiki** → name it.
@@ -49,7 +49,7 @@ The Wiki creates a folder of Markdown files. Structure it for the target assessm
 ```
 Save the following to my Target Assessment wiki as a findings document:
 
-# Target Assessment Findings — [DISEASE]
+# Target Assessment Findings — Rheumatoid Arthritis
 
 ## Identified Candidate Targets
 [Insert the candidate target list from Chapter 5]
@@ -71,7 +71,7 @@ Save the following as a decisions document in my Target Assessment wiki:
 # Target Selection Decisions
 
 ## Decision 1: Top Target Selection
-- **Decision**: [GENE_A] is recommended as the primary target
+- **Decision**: TYK2 is recommended as the primary target
 - **Rationale**: Highest combined score (X/30), confirmed by 
   independent expression data, active clinical trials in related 
   indication
@@ -80,7 +80,7 @@ Save the following as a decisions document in my Target Assessment wiki:
 - **Next steps**: [Experimental validation plan]
 
 ## Decision 2: Secondary Target
-- **Decision**: [GENE_B] recommended for parallel investigation
+- **Decision**: BTK recommended for parallel investigation
 - **Rationale**: Strong biological rationale, good druggability
 - **Evidence**: [Citations]
 ```
@@ -122,7 +122,7 @@ Create a brief notebook called "Target Assessment Executive Summary"
 
 The brief should contain:
 
-# Target Assessment Executive Summary — [DISEASE]
+# Target Assessment Executive Summary — Rheumatoid Arthritis
 **Date**: [Today's date]
 **Team**: [Team name]
 **Status**: Target identification and validation complete
@@ -130,14 +130,14 @@ The brief should contain:
 ## Key Findings
 - Evaluated [N] candidate therapeutic targets
 - Analyzed [X] internal datasets + [Y] public data sources
-- Top recommended target: [GENE_A] (score: X/30)
+- Top recommended target: TYK2 (score: X/30)
 
 ## Recommended Targets (Go / No-Go)
 | Target | Score | Recommendation | Key Risk |
 |--------|-------|---------------|----------|
-| GENE_A | 25/30 | **GO** | Limited clinical data |
-| GENE_B | 22/30 | **GO** | Needs internal validation |
-| GENE_C | 20/30 | **CONDITIONAL** | Counter-evidence exists |
+| TYK2 | 25/30 | **GO** | Limited clinical data |
+| BTK | 22/30 | **GO** | Needs internal validation |
+| JAK1 | 20/30 | **CONDITIONAL** | Counter-evidence exists |
 
 ## Evidence Strength
 - Internal data: Strong (RNA-seq + screening validated)
@@ -187,7 +187,7 @@ As you work through the analysis, you can pin Bookshelf search results directly 
 **Task 9.6** — Pin key evidence:
 ```
 Search my InternalResearchData bookshelf for the top evidence 
-supporting [GENE_A] as a target. Pin the top 3 results to my 
+supporting TYK2 as a target. Pin the top 3 results to my 
 Target Analysis Log notebook.
 ```
 
@@ -201,7 +201,7 @@ Notebooks can be rendered to shareable formats:
 
 **Task 9.7** — Publish the wiki:
 ```
-Render my "Target Assessment — [DISEASE]" notebook as LaTeX.
+Render my "Target Assessment — Rheumatoid Arthritis" notebook as LaTeX.
 ```
 
 Supported output formats:
@@ -219,7 +219,7 @@ Everything in `.discovery/` is plain files on disk. Version-control the entire w
 cd C:\MicrosoftDiscoveryLab\workspace
 git init
 git add .discovery/
-git commit -m "Target assessment for [DISEASE] - initial analysis complete"
+git commit -m "Target assessment for Rheumatoid Arthritis - initial analysis complete"
 ```
 
 This captures:
@@ -237,7 +237,7 @@ After this chapter, you have:
 
 ```
 📓 Notebooks
-├── Wiki: "Target Assessment — [DISEASE]"
+├── Wiki: "Target Assessment — Rheumatoid Arthritis"
 │   ├── findings.md          ← All candidate targets with evidence
 │   ├── decisions.md         ← Target selection decisions with rationale
 │   ├── methods.md           ← Complete methodology documentation
@@ -264,4 +264,4 @@ Before proceeding to Chapter 11, confirm:
 ---
 
 **Previous**: [← Chapter 9 — HPC & Analysis](chapter-09-hpc-and-analysis.md)
-**Next**: [Chapter 11 — Recap & Next Steps →](chapter-11-recap-next-steps.md)
+**Next**: [Chapter 11 — Enterprise Web Sessions →](chapter-11-enterprise-web-sessions.md)

@@ -230,7 +230,7 @@ What genes showed the highest differential expression in our RNA-seq studies?
 **Task 3.2** — Cross-document synthesis:
 ```
 Summarize the key findings across all our internal experiments related to 
-target identification for [your disease].
+target identification for Rheumatoid Arthritis.
 ```
 
 **Task 3.3** — Gap analysis:

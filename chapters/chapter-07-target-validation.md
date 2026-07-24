@@ -31,14 +31,14 @@ Validation is about **independent confirmation** — can you find support for yo
 **Task 7.1** — Create validation tasks for your top 3-5 targets:
 ```
 Use the tasks tool to create a target validation workflow.
-Parent task: "Target Validation for [DISEASE] — Top 5 Candidates"
+Parent task: "Target Validation for Rheumatoid Arthritis — Top 5 Candidates"
 
 Sub-tasks for each validation approach:
 
 1. "Independent Expression Validation" 
    - Search for publicly available gene expression datasets (GEO, 
      Expression Atlas/XPR) that independently show differential 
-     expression of our candidate genes in [DISEASE]
+     expression of our candidate genes in Rheumatoid Arthritis
    - Validation: Must find at least one independent dataset per target 
      or flag as "no independent confirmation"
 
@@ -83,10 +83,10 @@ For each of our top 5 candidate targets, search for independent
 validation from public gene expression datasets:
 
 1. Search PubMed for published studies that measured expression of 
-   [GENE_A, GENE_B, GENE_C, GENE_D, GENE_E] in [DISEASE]
+   [TYK2, BTK, JAK1, IRAK4, SYK] in Rheumatoid Arthritis
 2. Look for RNA-seq or microarray studies NOT from our internal data
 3. Check if the Expression Atlas (XPR) shows differential expression 
-   of these genes in [DISEASE] vs. normal tissue
+   of these genes in Rheumatoid Arthritis vs. normal tissue
 4. Search for publicly available GEO datasets that include these genes
 
 For each target:
@@ -118,7 +118,7 @@ For targets WITHOUT clinical trials:
 2. What is the closest related indication with clinical data?
 3. What would be needed to move this target to clinical testing?
 
-Also search PubMed for: "[GENE] clinical trial [DISEASE]" to find 
+Also search PubMed for: "TYK2 clinical trial Rheumatoid Arthritis" to find 
 any published clinical results.
 
 Mark "Clinical Evidence Deep Dive" as executionDone with results.
@@ -135,7 +135,7 @@ This task specifically addresses the question: "We have a target, we know extern
 Search my InternalResearchData bookshelf specifically for immunology 
 context on each candidate target:
 
-For each of [GENE_A, GENE_B, GENE_C, GENE_D, GENE_E]:
+For each of [TYK2, BTK, JAK1, IRAK4, SYK]:
 1. Has this gene appeared in any of our internal immunology studies?
 2. In which specific experiments or assays?
 3. What was the context — was it a primary finding or incidental?
@@ -161,7 +161,7 @@ Mark "Immunology Cross-Reference" as executionDone.
 ```
 For each candidate target, search for functional validation studies:
 
-1. CRISPR knockout/knockdown studies in [DISEASE] models
+1. CRISPR knockout/knockdown studies in Rheumatoid Arthritis models
 2. siRNA experiments showing phenotypic effects
 3. Genetic mouse models (knockout, conditional knockout)
 4. Pharmacological inhibition/activation studies

@@ -36,7 +36,7 @@ Before starting the engine, establish explicit scoring criteria. Ask Copilot to 
 
 **Task 6.1** — Define scoring criteria:
 ```
-Create a target prioritization scoring framework for [DISEASE]. 
+Create a target prioritization scoring framework for Rheumatoid Arthritis. 
 Define the following dimensions, each scored 1-5:
 
 1. **Genetic Evidence** (1-5): Strength of genetic association with disease
@@ -119,7 +119,7 @@ Open `.discovery/config.json` in your workspace and add an engine definition:
 **Task 6.2** — Create prioritization tasks:
 ```
 Use the tasks tool to create a target prioritization workflow. 
-Parent task: "Target Prioritization for [DISEASE]"
+Parent task: "Target Prioritization for Rheumatoid Arthritis"
 
 Sub-tasks:
 1. "Score Genetic Evidence" - For each candidate target, assess genetic 
@@ -216,9 +216,9 @@ Format as a table, sorted by total score descending.
 
 | Rank | Gene | Genetic (5) | Mechanism (5) | Druggable (5) | Clinical (5) | Internal (5) | Safety (5) | Total (/30) | Recommendation |
 |------|------|-------------|---------------|----------------|--------------|-------------|------------|-------------|----------------|
-| 1 | GENE_A | 5 | 4 | 4 | 3 | 5 | 4 | 25 | **Strong** — pursue |
-| 2 | GENE_B | 4 | 5 | 3 | 2 | 4 | 4 | 22 | **Strong** — pursue |
-| 3 | GENE_C | 3 | 3 | 5 | 4 | 2 | 3 | 20 | **Moderate** — needs internal validation |
+| 1 | TYK2 | 5 | 4 | 4 | 3 | 5 | 4 | 25 | **Strong** — pursue |
+| 2 | BTK | 4 | 5 | 3 | 2 | 4 | 4 | 22 | **Strong** — pursue |
+| 3 | JAK1 | 3 | 3 | 5 | 4 | 2 | 3 | 20 | **Moderate** — needs internal validation |
 | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
 
 ---
@@ -229,7 +229,7 @@ For each top candidate, get a detailed evidence report:
 
 **Task 6.5** — Deep dive on top target:
 ```
-For our top-ranked target [GENE_A], provide a detailed evidence report:
+For our top-ranked target TYK2, provide a detailed evidence report:
 
 1. **Genetic Evidence**: List every piece of genetic evidence, with 
    specific citations from our internal data and public literature

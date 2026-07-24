@@ -55,12 +55,12 @@ Open Copilot Chat (`Ctrl+Alt+I`) and create a structured task graph:
 
 **Task 5.1** — Create the task graph:
 ```
-Use the tasks tool to plan a target identification workflow for [DISEASE].
-Create a parent task called "Target Identification for [DISEASE]" and create
+Use the tasks tool to plan a target identification workflow for Rheumatoid Arthritis.
+Create a parent task called "Target Identification for Rheumatoid Arthritis" and create
 the following dependent sub-tasks:
 
 1. "Literature Review" - Review published literature on known targets and 
-   pathways for [DISEASE]
+   pathways for Rheumatoid Arthritis
 2. "Internal Data Analysis" - Analyze our internal RNA-seq and screening 
    data for differentially expressed genes
 3. "Public Database Cross-Reference" - Cross-reference candidate genes 
@@ -76,7 +76,7 @@ the following dependent sub-tasks:
 Open the **Tasks** panel in the sidebar to see your task graph. You should see:
 
 ```
-📋 Target Identification for [DISEASE]
+📋 Target Identification for Rheumatoid Arthritis
  ├── 📋 Literature Review                    [new]
  ├── 📋 Internal Data Analysis               [new]
  ├── 📋 Public Database Cross-Reference      [new]
@@ -100,11 +100,11 @@ This task leverages both your Bookshelves and live PubMed queries.
 
 **Task 5.2** — Comprehensive literature review:
 ```
-For [DISEASE], conduct a literature review using both my Bookshelves and PubMed:
+For Rheumatoid Arthritis, conduct a literature review using both my Bookshelves and PubMed:
 
 1. Search my InternalResearchData bookshelf for any prior work on targets 
    for this disease
-2. Search PubMed for the most cited review articles on [DISEASE] targets 
+2. Search PubMed for the most cited review articles on Rheumatoid Arthritis targets 
    from the last 5 years
 3. Identify the top 10-15 genes most frequently mentioned as therapeutic 
    targets

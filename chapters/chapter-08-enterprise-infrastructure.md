@@ -353,20 +353,20 @@ a therapeutic target for an autoimmune disease?
 
 **Task 8.1** — Test the default Discovery agent:
 ```
-I need to identify therapeutic targets for [DISEASE]. Help me plan 
+I need to identify therapeutic targets for Rheumatoid Arthritis. Help me plan 
 a systematic approach using available knowledge bases and tools.
 ```
 
 **Task 8.2** — Use your custom agent:
 ```
-@TargetAssessmentAgent Analyze gene [GENE_NAME] as a potential 
-therapeutic target for [DISEASE]. Score it on all 6 dimensions of 
+@TargetAssessmentAgent Analyze gene TYK2 as a potential 
+therapeutic target for Rheumatoid Arthritis. Score it on all 6 dimensions of 
 the target assessment framework.
 ```
 
 **Task 8.3** — Multi-agent collaboration:
 ```
-Start a comprehensive target identification investigation for [DISEASE]. 
+Start a comprehensive target identification investigation for Rheumatoid Arthritis. 
 Break this into sub-tasks: literature review, expression analysis, 
 druggability assessment, and clinical evidence review. Coordinate 
 across available knowledge bases and tools.

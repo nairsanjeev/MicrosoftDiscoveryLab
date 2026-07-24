@@ -40,33 +40,77 @@ Understanding a gene in biology requires pulling together information from many 
 
 ---
 
-## 4.3 Enable the Agent Plugin Marketplace
+## 4.3 Connect External Sources via Chat (Recommended)
 
-The Agent Plugin Marketplace is a Git repository of plugin manifests for curated scientific MCP servers.
+The fastest way to connect external data sources is through the same chat-based setup you used in Chapter 3. The project setup orchestrator can enable all your MCP tools in a single conversation.
 
-### Step 1: Add the Marketplace URL
+### Step 1: Open Copilot Chat
 
-Open VS Code settings (`Ctrl+,`) or edit `settings.json` directly and add:
+Press `Ctrl+Alt+I` or click the Copilot Chat icon.
+
+### Step 2: Ask the Orchestrator to Connect Public Databases
+
+Enter the following prompt:
+
+```
+I need to connect my Discovery project to external biomedical databases 
+for drug target research on Rheumatoid Arthritis. Please enable:
+1. PubMed and ClinicalTrials.gov (via BioMCP)
+2. NCBI Entrez (gene, protein, nucleotide lookups)
+3. UniProt (protein annotations and druggability)
+4. bioRxiv/arXiv (preprints)
+
+Configure all of them and confirm each is connected with a green health dot.
+```
+
+### Step 3: Confirm Connection
+
+The orchestrator will enable each tool and report status. You should see:
+
+```
+✅ BioMCP (PubMed + ClinicalTrials.gov) — connected
+✅ NCBI Entrez — connected  
+✅ UniProt — connected
+✅ bioRxiv/arXiv — connected
+```
+
+Check the **TOOLS** section in the Discovery sidebar — each tool should show a green health indicator.
+
+> **Why chat-based?** The orchestrator handles marketplace registration, plugin installation, and health verification in one step. No manual settings.json editing required.
+
+---
+
+## 4.4 Connect External Sources Manually (Alternative)
+
+If you prefer manual setup, or if the orchestrator approach didn't work:
+
+### Step 1: Add the Agent Plugin Marketplace
+
+Open VS Code settings (`Ctrl+,`) and search for `chat.plugins.marketplaces`. Add the marketplace URL:
 
 ```json
 {
   "chat.plugins.marketplaces": [
-    // Add the Agent Plugin Marketplace URL as documented in the Discovery quickstart
+    "https://aka.ms/discovery-plugin-marketplace"
   ]
 }
 ```
 
-> **Note**: Refer to the latest Discovery documentation or the `quickstart.md` in the GitHub repo for the exact marketplace URL.
-
 ### Step 2: Reload VS Code
 
-After adding the marketplace URL, reload VS Code (`Ctrl+Shift+P` → `Developer: Reload Window`).
+Press `Ctrl+Shift+P` → `Developer: Reload Window`.
+
+### Step 3: Enable Tools from the Sidebar
+
+1. Open the **TOOLS** section in the Discovery sidebar.
+2. Click the **+** button to browse available tools.
+3. Enable each tool individually (see Section 4.5 for details on each).
 
 ---
 
-## 4.4 Enable Biomedical MCP Tools
+## 4.5 Enable Biomedical MCP Tools
 
-Open the **Tool Catalog** panel in the Discovery sidebar. You should now see available tools from the marketplace.
+Whether you used the chat or manual approach, here's what each tool provides and how to verify it's working:
 
 ### Enable the following tools for our target-identification workflow:
 
@@ -74,32 +118,34 @@ Open the **Tool Catalog** panel in the Discovery sidebar. You should now see ava
 
 **What it provides**: Semantic search over PubMed articles and ClinicalTrials.gov entries.
 
-1. Find **BioMCP** in the Tool Catalog panel.
+**Manual setup**:
+1. Find **BioMCP** in the TOOLS panel.
 2. Toggle it **on**.
 3. Wait for the green health dot to confirm the plugin is connected.
 
 **Task 4.1** — Test PubMed access:
 ```
-Using PubMed, find recent publications on [your target gene] and its role 
-in [your disease]. Summarize the top 5 findings.
+Using PubMed, find recent publications on TYK2 and its role 
+in Rheumatoid Arthritis. Summarize the top 5 findings.
 ```
 
 **Task 4.2** — Test ClinicalTrials.gov access:
 ```
 Search ClinicalTrials.gov for any active clinical trials targeting 
-[your gene/pathway] for [your disease]. What compounds are being tested?
+TYK2 or the JAK-STAT pathway for Rheumatoid Arthritis. What compounds are being tested?
 ```
 
 #### 2. NCBI Entrez (Gene / Protein / Nucleotide) 🧬
 
 **What it provides**: Direct access to NCBI gene records, protein entries, and nucleotide sequences.
 
-1. Find **NCBI Entrez** in the Tool Catalog.
+**Manual setup**:
+1. Find **NCBI Entrez** in the TOOLS panel.
 2. Toggle it **on**.
 
 **Task 4.3** — Gene lookup:
 ```
-Look up gene [your gene name] in NCBI. What is its full name, chromosomal 
+Look up gene TYK2 in NCBI. What is its full name, chromosomal 
 location, and known function? What pathways is it involved in?
 ```
 
@@ -107,12 +153,13 @@ location, and known function? What pathways is it involved in?
 
 **What it provides**: Protein sequence data, functional annotations, interaction partners, and disease associations.
 
-1. Find **UniProt** in the Tool Catalog.
+**Manual setup**:
+1. Find **UniProt** in the TOOLS panel.
 2. Toggle it **on**.
 
 **Task 4.4** — Protein function:
 ```
-Using UniProt, describe the protein encoded by [your gene]. What are its 
+Using UniProt, describe the protein encoded by TYK2. What are its 
 known interaction partners and disease associations? Is it considered 
 druggable?
 ```
@@ -121,25 +168,26 @@ druggable?
 
 **What it provides**: Latest preprints that may not yet be indexed in PubMed.
 
-1. Find **arXiv** and **bioRxiv/medRxiv** in the Tool Catalog.
+**Manual setup**:
+1. Find **arXiv** and **bioRxiv/medRxiv** in the TOOLS panel.
 2. Toggle them **on**.
 
 **Task 4.5** — Latest research:
 ```
-Find recent bioRxiv preprints on [your gene/pathway] in [your disease] 
+Find recent bioRxiv preprints on TYK2 or JAK-STAT signaling in Rheumatoid Arthritis 
 from the last 6 months. Are there any new findings not yet in PubMed?
 ```
 
 ---
 
-## 4.5 Querying Multiple External Sources Simultaneously
+## 4.6 Querying Multiple External Sources Simultaneously
 
 Now that your tools are enabled, you can ask questions that span multiple public databases in a single prompt:
 
 **Task 4.6** — Multi-source query:
 ```
-For gene [GENE_NAME]:
-1. What does PubMed say about its role in [DISEASE]?
+For gene TYK2:
+1. What does PubMed say about its role in Rheumatoid Arthritis?
 2. Are there any clinical trials targeting it?
 3. What is the protein's function according to UniProt?
 4. Are there any recent preprints with new findings?
@@ -152,7 +200,7 @@ therapeutic target.
 
 ---
 
-## 4.6 (Optional) Create a "Public Literature" Bookshelf
+## 4.7 (Optional) Create a "Public Literature" Bookshelf
 
 For deeper analysis, you can curate a collection of key public papers and index them in a second Bookshelf. This gives you GraphRAG-powered reasoning over public literature, not just live API lookups.
 
@@ -187,14 +235,14 @@ Now Copilot has access to both your internal data AND curated public literature:
 
 **Task 4.7** — Cross-Bookshelf reasoning:
 ```
-Compare what our internal experimental data says about [GENE] with what 
+Compare what our internal experimental data says about TYK2 with what 
 the published literature reports. Are our findings consistent with the 
 public evidence? Where do they diverge?
 ```
 
 ---
 
-## 4.7 Understanding Data Source Tiers
+## 4.8 Understanding Data Source Tiers
 
 Think of your data sources in tiers:
 
@@ -219,7 +267,7 @@ The Discovery Engine can orchestrate across all three tiers simultaneously.
 
 ---
 
-## 4.8 Checkpoint
+## 4.9 Checkpoint
 
 Before proceeding to Chapter 5, confirm:
 

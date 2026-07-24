@@ -169,7 +169,7 @@ In the enterprise platform, computational tools run on supercomputer node pools:
 
 ```
 Task: "Perform differential expression meta-analysis across all 
-internal RNA-seq datasets for [DISEASE]"
+internal RNA-seq datasets for Rheumatoid Arthritis"
 
 Engine orchestrates:
 1. Agent reads input data via storage asset
